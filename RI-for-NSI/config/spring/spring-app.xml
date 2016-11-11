@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://cxf.apache.org/jaxws
+		http://cxf.apache.org/schemas/jaxws.xsd
+		">
+		
+	<!-- The service bean -->
+	<!-- <bean id="ConnectionRequesterPortImpl" class="com.netmng.websvc.soap.server.ConnectionRequesterPortImpl" /> -->
+	<bean id="ConnectionRequesterPortImpl" class="com.netmng.websvc.soap.svc.requester.ConnectionRequesterPortImpl" />
+	<bean id="ConnectionProviderPortImpl" class="com.netmng.websvc.soap.svc.provider.ConnectionProviderPortImpl" />
+	
+	<!-- DataBase 성정  -->
+	<import resource="classpath:config/spring/db.xml"/>
+	
+	<import resource="classpath:config/spring/web-service.xml"/>
+	
+	
+	
+	<!-- <jaxws:endpoint id="connectionRequesterPortImpl"
+					implementor="com.netmng.websvc.soap.server.ConnectionRequesterPortImpl"
+					address="http://112.216.233.235:8787/SC_Requester/ConnectionServiceRequester" /> -->	
+	<!-- <jaxws:endpoint id="connectionRequesterPortImpl"
+					implementor="com.netmng.websvc.soap.server.ConnectionRequesterPortImpl"
+					address="http://127.0.0.1:8787/SC_Requester/ConnectionServiceRequester" /> -->
+					
+	<!-- <jaxws:endpoint id="connectionRequesterPortImpl"
+					implementor="#ConnectionRequesterPortImpl"
+					implementorClass="com.netmng.websvc.soap.svc.requester.ConnectionRequesterPortImpl"
+					address="http://127.0.0.1:8787/SC_Requester/ConnectionServiceRequester" /> -->
+					
+	<jaxws:endpoint id="connectionRequesterPortImpl"
+					implementor="#ConnectionRequesterPortImpl"
+					implementorClass="com.netmng.websvc.soap.svc.requester.ConnectionRequesterPortImpl"
+					address="http://112.216.233.235:8787/SC_Requester/ConnectionServiceRequester" />
+	<jaxws:endpoint id="connectionProviderPortImpl"
+					implementor="#ConnectionProviderPortImpl"
+					implementorClass="com.netmng.websvc.soap.svc.provider.ConnectionProviderPortImpl"
+					address="http://112.216.233.235:8787/SC_Requester/ConnectionServiceProvider" />
+					
+	<!-- <jaxws:endpoint id="connectionRequesterPortImpl"
+					implementor="com.netmng.websvc.soap.svc.requester.ConnectionRequesterPortImpl"
+					address="http://127.0.0.1:8787/SC_Requester/ConnectionServiceRequester" >
+	</jaxws:endpoint> -->
+	
+						
+	<!-- 환경설정 파일 로드  -->		
+	<util:properties id="netmngConfig" location="classpath:config/i18n/netmng.properties" />
+				
+	<!-- 어노테이션 자동설정(빈등록 및 의존관계 자동검색 설정)  -->			
+	<context:annotation-config />
+	
+	<!-- service 등록  -->
+	<context:component-scan base-package="com.netmng.svc" />
+	<!-- <context:component-scan base-package="com.netmng.svc.header" />
+	<context:component-scan base-package="com.netmng.svc.param" />
+	<context:component-scan base-package="com.netmng.svc.service" />
+	<context:component-scan base-package="com.netmng.svc.type" /> -->
+	
+	
+	<bean id="fileService" 		class="com.netmng.svc.com.FileService" />
+	<bean id="brdService" 		class="com.netmng.svc.brd.BrdService" />
+	<bean id="userService" 		class="com.netmng.svc.user.UserService" />
+	<bean id="admService" 		class="com.netmng.svc.adm.AdmService" />
+	<bean id="nsaService" 		class="com.netmng.svc.nsa.NsaService" />
+	<bean id="restService" 		class="com.netmng.svc.rest.RestService" />
+	<bean id="comUtil" 			class="com.netmng.util.ComUtil" />
+		 
+	<!-- 벨로시티 설정  -->	 
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">    
+		<property name="resourceLoaderPath" value="/WEB-INF/mail/"/>    
+		<property name="velocityProperties">        
+			<props>            
+				<!-- properties 생략 -->        
+			</props>    
+		</property>
+	</bean> 
+		 
+	<!-- 다국어 파일등록 -->	
+	<bean id="messageSource"  
+			class="org.springframework.context.support.ReloadableResourceBundleMessageSource">    
+		<property name="basenames">
+			<list>
+				<value>classpath:config/i18n/messages</value>
+			</list>
+		</property>  
+		<property name="cacheSeconds" value="0" />
+		<property name="defaultEncoding" value="UTF-8"/>    
+	</bean>  	
+	
+	<!--  validator  -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<!-- <property name="validationMessageSource" ref="messageSource" /> -->
+	</bean>
+	
+	<!-- 다국어설정 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<!--강제설정<property name="defaultLocale" value="ko"/>-->			
+	</bean>	 
+	
+	<!-- 다국어 프로퍼티 유틸 등록 -->
+	<bean id="messageUtil" class="com.netmng.util.MessageUtil" />
+	
+	<!-- 
+	<bean id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">  
+		<property name="paramName" value="lang" /> 	
+	</bean>  
+	
+	<bean id="handlerMapping"
+			class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors"> 
+			<ref bean="localeChangeInterceptor" /> 
+		</property>
+	</bean>	
+	 -->	
+</beans>

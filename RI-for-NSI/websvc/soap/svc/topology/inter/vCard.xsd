@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="urn:ietf:params:xml:ns:vcard-4.0"
+           targetNamespace="urn:ietf:params:xml:ns:vcard-4.0"
+           elementFormDefault="qualified">
+    
+    <xs:element name="text" type="xs:string"/>
+    <!--
+    <xs:complexType name="vCardType" >
+        <xs:sequence>
+            <xs:element name="text" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    -->
+</xs:schema>

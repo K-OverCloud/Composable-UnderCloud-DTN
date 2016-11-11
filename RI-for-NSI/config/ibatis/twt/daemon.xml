@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 
+		'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+ 
+<sqlMap namespace="daemon">
+
+	<!-- alias area start -->
+	<typeAlias alias="SearchListM1N" 			type="com.netmng.dto.SearchListM1NDTO" />
+	<typeAlias alias="SearchListD1N" 			type="com.netmng.dto.SearchListD1NDTO" />
+	<typeAlias alias="SearchResultM1N" 			type="com.netmng.dto.SearchResultM1NDTO" />
+	<typeAlias alias="SearchResultD" 			type="com.netmng.vo.SearchResultD" />
+	<typeAlias alias="SearchResultD11" 			type="com.netmng.dto.SearchResultD11DTO" />
+	<typeAlias alias="SearchResultM11" 			type="com.netmng.dto.SearchResultM11DTO" />
+	<typeAlias alias="SearchListD11" 			type="com.netmng.dto.SearchListD11DTO" />
+	<typeAlias alias="SearchListM" 				type="com.netmng.vo.SearchListM" />
+	<typeAlias alias="Config" 					type="com.netmng.vo.Config" />
+	
+	
+	<typeAlias alias="View1Param" 				type="com.netmng.param.twtList.View1Param" />
+	
+	<!-- alias area end -->
+
+	<!-- resultMap area start -->
+	<!-- 
+	<resultMap id="TestDTO" class="TestDTO">
+		<result property = "org_code" 			column = "ORG_CODE" />
+		<result property = "org_name" 			column = "ORG_NAME" />
+		<result property = "kk.kkk" 			column = "{org_code=ORG_CODE}" select="test.OrgInfoCnt" />
+		<result property = "k" 					column = "{org_code=ORG_CODE}" select="test.OrgInfoList1" />
+	</resultMap>
+	 -->
+	
+	<resultMap id="currSearchListMap" class="SearchListM1N">
+		<result property = "searm_seq" 			column = "SEARM_SEQ" />
+		<result property = "search_list_d_list" column = "{searm_seq=SEARM_SEQ}" select="daemon.currSearchListD" />
+	</resultMap>
+	
+	<resultMap id="currSearchListDMap" class="SearchListD1N">
+		<result property = "seard_seq" 			column = "SEARD_SEQ" />
+		<result property = "searm_seq" 			column = "SEARM_SEQ" />
+		<result property = "seard_text" 		column = "SEARD_TEXT" />
+	</resultMap>
+	<!-- resultMap area end -->
+
+	<!-- sql area start -->
+	<select id="config" parameterClass="java.util.Map" resultClass="Config">
+	<![CDATA[ 
+		SELECT 	
+				CON_SEQ, 
+				CON_ID, 
+				CON_VAL, 
+				CON_COMMENT, 
+				CON_TIME
+		FROM 
+				CONFIG
+		WHERE
+				CON_ID = #con_id# 
+	]]> 
+	</select>
+	
+	<select id="currSearchListM" resultMap="currSearchListMap">
+	<![CDATA[ 
+		SELECT 
+				MAX(SEARM_SEQ) AS SEARM_SEQ 
+		FROM 
+				SEARCH_LIST_M
+	]]> 
+	</select>
+	<statement id="currSearchListD" resultMap="currSearchListDMap">
+	<![CDATA[ 
+		SELECT 
+				SEARD_SEQ, 
+				SEARM_SEQ, 
+				SEARD_TEXT
+		FROM 
+				SEARCH_LIST_D
+		WHERE
+				SEARM_SEQ = #searm_seq#
+		ORDER BY SEARD_SEQ
+	]]> 
+	</statement>
+	
+	<insert id="searchResultMInsert" parameterClass="SearchResultM1N">
+	<![CDATA[
+		INSERT INTO SEARCH_RESULT_M 
+		(
+			SEARD_SEQ, 
+			SEARRESM_TIME
+		)
+		VALUES
+		(
+			#seard_seq#, 
+			NOW()
+		)
+	]]>
+		<selectKey keyProperty="searresm_seq" resultClass="Integer">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	
+	<insert id="searchResultDInsert" parameterClass="SearchResultD">
+	<![CDATA[
+		INSERT INTO SEARCH_RESULT_D 
+		(
+			SEARM_SEQ, 
+			SEARRESD_TWT_ID, 
+			SEARRESM_SEQ, 
+			SEARD_SEQ, 
+			SEARRESD_TWT_FROM_USER, 
+			SEARRESD_TWT_FROM_USER_ID, 
+			SEARRESD_TWT_TO_USER, 
+			SEARRESD_TWT_TO_USER_ID, 
+			SEARRESD_TWT_CREATED_AT, 
+			SEARRESD_TWT_TEXT, 
+			SEARRESD_TWT_SOURCE, 
+			SEARRESD_TWT_PROFILE_IMG_URL, 
+			SEARRESD_TIME
+		)
+		VALUES
+		(
+			#searm_seq#, 
+			#searresd_twt_id#, 
+			#searresm_seq#, 
+			#seard_seq#, 
+			#searresd_twt_from_user#, 
+			#searresd_twt_from_user_id#, 
+			#searresd_twt_to_user#, 
+			#searresd_twt_to_user_id#, 
+			#searresd_twt_created_at#, 
+			#searresd_twt_text#, 
+			#searresd_twt_source#, 
+			#searresd_twt_profile_img_url#, 
+			NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			SEARD_SEQ = INSERT(SEARD_SEQ, LOCATE('1', #seard_seq#), 1, '1')
+	]]>
+	</insert>
+	
+	<select id="srchTwtListType1" parameterClass="View1Param" resultClass="SearchResultD">
+	<![CDATA[
+		SELECT 	
+				SEARM_SEQ, 
+				SEARRESD_TWT_ID, 
+				SEARRESM_SEQ, 
+				SEARRESD_SEQ, 
+				SEARD_SEQ, 
+				SEARRESD_TWT_FROM_USER, 
+				SEARRESD_TWT_FROM_USER_ID, 
+				SEARRESD_TWT_TO_USER, 
+				SEARRESD_TWT_TO_USER_ID, 
+				SEARRESD_TWT_CREATED_AT, 
+				SEARRESD_TWT_TEXT, 
+				SEARRESD_TWT_SOURCE, 
+				SEARRESD_TWT_PROFILE_IMG_URL, 
+				SEARRESD_TIME
+		FROM 
+				SEARCH_RESULT_D
+		WHERE 
+				1=1
+	]]>
+		<isNotEmpty property="createdAtBegin" prepend="AND">
+		<![CDATA[
+				SEARRESD_TWT_CREATED_AT >= CONVERT(#createdAtBegin#, DATETIME)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createdAtEnd" prepend="AND">
+		<![CDATA[
+				SEARRESD_TWT_CREATED_AT <= CONVERT(#createdAtEnd#, DATETIME)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+				SEARRESD_TWT_TEXT LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		ORDER BY SEARM_SEQ, SEARRESD_TWT_ID, SEARRESD_SEQ
+		LIMIT #sIdx#, #row#
+	</select>
+	<select id="srchTwtCntType1" parameterClass="View1Param" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT 	
+				COUNT(SEARRESD_SEQ) AS CNT
+		FROM 
+				SEARCH_RESULT_D
+		WHERE 
+				1=1
+	]]>
+		<isNotEmpty property="createdAtBegin" prepend="AND">
+		<![CDATA[
+				SEARRESD_TWT_CREATED_AT >= CONVERT(#createdAtBegin#, DATETIME)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createdAtEnd" prepend="AND">
+		<![CDATA[
+				SEARRESD_TWT_CREATED_AT <= CONVERT(#createdAtEnd#, DATETIME)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+				SEARRESD_TWT_TEXT LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+	</select>
+	<!-- sql area end -->
+</sqlMap>

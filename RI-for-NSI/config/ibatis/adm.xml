@@ -1,0 +1,1338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 
+		'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+ 
+<sqlMap namespace="adm">
+
+	<!-- alias area start -->
+	<typeAlias alias="User" 					type="com.netmng.vo.User" />
+	<typeAlias alias="Router"	 				type="com.netmng.vo.Router" />
+	<typeAlias alias="RouterType" 				type="com.netmng.vo.RouterType" />
+	<typeAlias alias="InterfaceInfo"	 		type="com.netmng.vo.InterfaceInfo" />
+	<typeAlias alias="GnprInfo" 				type="com.netmng.vo.GnprInfo" />
+	<typeAlias alias="Event" 					type="com.netmng.vo.Event" />
+	<typeAlias alias="EventLog" 				type="com.netmng.vo.EventLog" />
+	<typeAlias alias="ErrorLog" 				type="com.netmng.vo.ErrorLog" />
+	<typeAlias alias="RouterDTO"	 			type="com.netmng.dto.adm.stp.RouterDTO" />
+	<typeAlias alias="UserDTO" 					type="com.netmng.dto.user.UserDTO" />
+	<typeAlias alias="InterfaceInfoDTO" 		type="com.netmng.dto.adm.stp.InterfaceInfoDTO" />
+	<typeAlias alias="UserMonitorDTO" 			type="com.netmng.dto.adm.monitor.UserMonitorDTO" />
+	<typeAlias alias="SrchUserParam" 			type="com.netmng.param.adm.SrchUserParam" />
+	<typeAlias alias="SrchEventParam" 			type="com.netmng.param.adm.SrchEventParam" />
+	<typeAlias alias="SrchErrorParam" 			type="com.netmng.param.adm.SrchErrorParam" />
+	<typeAlias alias="SrchUserMonitorParam" 	type="com.netmng.param.adm.SrchUserMonitorParam" />
+	<typeAlias alias="CdDw" 					type="com.netmng.vo.CdDw" />
+	<typeAlias alias="ProviderNsa" 				type="com.netmng.vo.ProviderNsa" />
+	<typeAlias alias="StpNetwork" 				type="com.netmng.vo.StpNetwork" />
+	<typeAlias alias="StpLocal" 				type="com.netmng.vo.StpLocal" />
+	<typeAlias alias="StpVlan" 					type="com.netmng.vo.StpVlan" />
+	<!-- alias area end -->
+
+	<!-- resultMap area start -->
+	<resultMap id="gnprInfoMap" 					class="GnprInfo">
+		<result property = "seq" 					column = "SEQ" 						/>
+		<result property = "group_seq" 				column = "GROUP_SEQ" 				/>
+		<result property = "gnpr_id" 				column = "GNPR_ID" 					/>
+		<result property = "site_a_seq" 			column = "SITE_A_SEQ" 				/>
+		<result property = "site_a_router_ip" 		column = "SITE_A_ROUTER_IP" 		/>
+		<result property = "site_a_interface_ip" 	column = "SITE_A_INTERFACE_IP" 		/>
+		<result property = "site_b_seq" 			column = "SITE_B_SEQ" 				/>
+		<result property = "site_b_router_ip" 		column = "SITE_B_ROUTER_IP" 		/>
+		<result property = "site_b_interface_ip" 	column = "SITE_B_INTERFACE_IP" 		/>
+		<result property = "interface_type" 		column = "INTERFACE_TYPE" 			/>
+		<result property = "use_yn" 				column = "USE_YN" 					/>
+		<result property = "createtime" 			column = "CREATETIME" 				/>
+		<result property = "deltime" 				column = "DELTIME" 					/>
+	</resultMap>
+	<resultMap id="userMap" 						class="User">		
+		<result property = "seq" 					column = "SEQ" 			/>
+		<result property = "id" 					column = "ID" 			/>
+		<result property = "name" 					column = "NAME" 		/>
+		<result property = "company" 				column = "COMPANY" 		/>
+		<result property = "email" 					column = "EMAIL" 		/>
+		<result property = "grade_seq" 				column = "GRADE_SEQ" 	/>
+		<result property = "active_yn" 				column = "ACTIVE_YN" 	/>
+		<result property = "createTime" 			column = "CREATETIME" 	/>
+		<result property = "delTime" 				column = "DELTIME" 		/>
+		<result property = "grade" 					column = "{step=GRADE_SEQ}"				select="user.userGradeSelect" />
+	</resultMap>
+	<resultMap id="userInfoMap" 					class="UserDTO"					extends="userMap">
+		<result property = "jumin_no" 				column = "JUMIN_NO" 	/>
+	</resultMap>
+	<resultMap id="routerTypeMap" 					class="RouterType">
+		<result property = "seq" 					column = "SEQ" 						/>
+		<result property = "name" 					column = "NAME"			 			/>
+		<result property = "use_yn" 				column = "USE_YN" 					/>
+		<result property = "createtime" 			column = "CREATETIME" 				/>
+		<result property = "deltime" 				column = "DELTIME" 					/>
+	</resultMap>
+	<resultMap id="userMonitorMap" 					class="UserMonitorDTO">
+		<result property = "seq" 					column = "SEQ" 						/>
+		<result property = "id" 					column = "ID" 						/>
+		<result property = "name" 					column = "NAME" 					/>
+		<result property = "cnt" 					column = "CNT" 						/>
+	</resultMap>
+	<resultMap id="routerMap" 						class="Router">
+		<result property = "seq" 					column = "SEQ" 						/>
+		<result property = "group_seq" 				column = "GROUP_SEQ" 				/>
+		<result property = "site_name" 				column = "SITE_NAME" 				/>
+		<result property = "kind" 					column = "KIND" 					/>
+		<result property = "urn" 					column = "URN" 						/>
+		<result property = "ip" 					column = "IP" 						/>
+		<result property = "router_type_seq" 		column = "ROUTER_TYPE_SEQ" 			/>
+		<result property = "use_yn" 				column = "USE_YN" 					/>
+		<result property = "createtime" 			column = "CREATETIME" 				/>
+		<result property = "deltime" 				column = "DELTIME" 					/>
+		<result property = "fault_yn" 				column = "FAULT_YN" 				/>
+	</resultMap>
+	<resultMap id="routerDTOMap"					class="RouterDTO" 				extends="routerMap">
+		<result property = "routerType"				column = "{seq=ROUTER_TYPE_SEQ}"		select="adm.routerTypeSelect" />
+	</resultMap>
+	<resultMap id="routerDTOListMap"				class="RouterDTO" 				extends="routerMap">
+		<result property = "routerType"				column = "{seq=ROUTER_TYPE_SEQ}"	select="adm.routerTypeSelect" />
+		<result property = "interfaceInfoDTOList"	column = "{router_seq=SEQ}"			select="adm.interfaceInfoSelect" />
+	</resultMap>
+	<resultMap id="interfaceInfoMap" 				class="InterfaceInfo">		
+		<result property = "seq" 					column = "SEQ" 						/>
+		<result property = "group_seq" 				column = "GROUP_SEQ" 				/>
+		<result property = "router_seq" 			column = "ROUTER_SEQ" 				/>
+		<result property = "primary_ip" 			column = "PRIMARY_IP" 				/>
+		<result property = "secondary_ip" 			column = "SECONDARY_IP" 			/>
+		<result property = "primary_bw" 			column = "PRIMARY_BW" 				/>
+		<result property = "secondary_bw" 			column = "SECONDARY_BW" 			/>
+		<result property = "link_interface_seq" 	column = "LINK_INTERFACE_SEQ" 		/>
+		<result property = "use_yn" 				column = "USE_YN" 					/>
+		<result property = "createtime" 			column = "CREATETIME" 				/>
+		<result property = "deltime" 				column = "DELTIME" 					/>
+		<result property = "p_fault_yn" 			column = "P_FAULT_YN" 				/>
+		<result property = "s_fault_yn" 			column = "S_FAULT_YN" 				/>
+		<result property = "use_line" 				column = "USE_LINE" 				/>
+		<result property = "local_id" 				column = "LOCAL_ID" 				/>
+		<result property = "local_nm" 				column = "LOCAL_NM" 				/>
+		<result property = "routerDTO"				column = "{seq=ROUTER_SEQ}"			select="adm.routerDTOSelect" />
+	</resultMap>
+	<resultMap id="interfaceInfoDTOMap" 			class="InterfaceInfoDTO" 		extends="interfaceInfoMap">
+		<result property = "link_interface"			column = "{seq=LINK_INTERFACE_SEQ}"	select="adm.linkInterfaceInfoSelect" />
+	</resultMap>
+	<resultMap id="eventMap" 						class="Event">		
+		<result property = "seq" 					column = "SEQ" 						/>
+		<result property = "cause" 					column = "CAUSE" 					/>
+		<result property = "description" 			column = "DESCRIPTION" 				/>
+		<result property = "restore_yn" 			column = "RESTORE_YN" 				/>
+		<result property = "line" 					column = "LINE" 					/>
+		<result property = "createtime" 			column = "CREATETIME" 				/>
+		<result property = "eventLogList"			column = "{event_seq=SEQ}"			select="adm.eventLogList" />
+		<result property = "router"					column = "ROUTER" 					/>
+	</resultMap>
+	<resultMap id="eventLogMap" 					class="EventLog">
+		<result property = "seq" 					column = "SEQ" 						/>
+		<result property = "event_seq" 				column = "EVENT_SEQ" 				/>
+		<result property = "fault_router" 			column = "FAULT_ROUTER" 			/>
+		<result property = "fault_interface" 		column = "FAULT_INTERFACE" 			/>
+		<result property = "link_router" 			column = "LINK_ROUTER" 				/>
+		<result property = "link_interface" 		column = "LINK_INTERFACE" 			/>
+		<result property = "line" 					column = "LINE" 	 				/>
+		<result property = "fault_urn" 				column = "FAULT_URN" 				/>
+		<result property = "link_urn" 				column = "FAULT_URN" 				/>
+	</resultMap>	
+	<resultMap id="errorLogMap" 					class="ErrorLog">
+		<result property = "seq" 					column = "SEQ" 						/>
+		<result property = "url"	 				column = "URL"		 				/>
+		<result property = "name" 					column = "NAME" 					/>
+		<result property = "log_message" 			column = "LOG_MESSAGE" 				/>
+		<result property = "createtime" 			column = "CREATETIME" 				/>
+	</resultMap>	
+	<resultMap id="cdDwListMap" 					class="CdDw">
+		<result property = "cd_up_seq" 				column = "CD_UP_SEQ" 				/>
+		<result property = "cd_up_nm"	 			column = "CD_UP_NM"		 			/>
+		<result property = "cd_dw_seq" 				column = "CD_DW_SEQ" 				/>
+		<result property = "cd_dw_nm" 				column = "CD_DW_NM" 				/>
+		<result property = "cd_dw_val" 				column = "CD_DW_VAL" 				/>
+	</resultMap>
+	<resultMap id="providerNsaListMap" 				class="ProviderNsa">
+		<result property = "nsa_addr" 				column = "NSA_ADDR" 				/>
+		<result property = "nsa_nm"	 				column = "NSA_NM"		 			/>
+		<result property = "admin_contact" 			column = "ADMIN_CONTACT" 			/>
+		<result property = "endpoint_addr" 			column = "ENDPOINT_ADDR" 			/>
+		<result property = "ref_url" 				column = "REF_URL" 					/>
+	</resultMap>
+	<resultMap id="stpNetworkListMap" 				class="StpNetwork">
+		<result property = "network_id" 			column = "NETWORK_ID" 				/>
+		<result property = "network_nm"	 			column = "NETWORK_NM"				/>
+		<result property = "network_fault_yn" 		column = "NETWORK_FAULT_YN" 		/>
+		<result property = "nsa_addr" 				column = "NSA_ADDR" 				/>
+	</resultMap>
+	<resultMap id="stpLocalListMap" 				class="StpLocal"					extends="stpNetworkListMap">
+		<result property = "local_id" 				column = "LOCAL_ID" 				/>
+		<result property = "local_nm"	 			column = "LOCAL_NM"					/>
+		<result property = "local_fault_yn" 		column = "LOCAL_FAULT_YN" 			/>
+	</resultMap>
+	<resultMap id="stpVlanListMap" 					class="StpVlan"						extends="stpLocalListMap">
+		<result property = "vlan_seq" 				column = "VLAN_SEQ" 				/>
+	</resultMap>
+	<!-- resultMap area end -->
+
+	<!-- sql area start -->
+	<select id="srchUserCnt" parameterClass="SrchUserParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT 	
+				COUNT(SEQ) AS CNT
+		FROM 
+				USER
+		WHERE 
+				1=1
+				AND ACTIVE_YN = 'Y'
+	]]>
+		<isEqual property="mode" compareValue="name">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+				NAME LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+		<isEqual property="mode" compareValue="id">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+				ID LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+		<isEqual property="mode" compareValue="company">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+				COMPANY LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+	</select>
+	<select id="srchUserList" parameterClass="SrchUserParam" resultMap="userMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, C.ID, C.NAME, C.COMPANY, C.EMAIL, 
+				C.GRADE_SEQ, C.ACTIVE_YN, C.CREATETIME, C.DELTIME 
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT
+								SEQ, ID, NAME, COMPANY, EMAIL, 
+								GRADE_SEQ, ACTIVE_YN, CREATETIME, DELTIME
+						FROM
+								USER
+						WHERE
+								1=1
+								AND ACTIVE_YN = 'Y'
+								AND SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	]]>
+		<isEqual property="mode" compareValue="name">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+								NAME LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+		<isEqual property="mode" compareValue="id">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+								ID LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+		<isEqual property="mode" compareValue="company">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+								COMPANY LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+	<![CDATA[	
+						ORDER BY $sortKey$ $sortType$) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				C.SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select>
+	<select id="userInfoSelect" parameterClass="User" resultMap="userInfoMap">
+	<![CDATA[
+		SELECT
+				SEQ,
+				ID, 
+				NAME, 
+				JUMIN_NO, 
+				COMPANY, 
+				EMAIL, 
+				GRADE_SEQ, 
+				ACTIVE_YN, 
+				CREATETIME, 
+				DELTIME
+		FROM
+				USER
+		WHERE
+				SEQ	= #seq#
+				AND ACTIVE_YN = 'Y'
+	]]>
+	</select>
+	<update id="userGradeUpdate" parameterClass="UserDTO">
+	<![CDATA[	
+		UPDATE USER 
+		SET	GRADE_SEQ = #grade_seq#
+		WHERE
+			SEQ	= #seq#
+	]]>	
+	</update>
+	<update id="userDropUpdate" parameterClass="UserDTO">
+	<![CDATA[	
+		UPDATE USER 
+		SET	
+			GRADE_SEQ = #grade_seq#,
+			ACTIVE_YN = #active_yn#,
+			DELTIME = NOW()
+		WHERE
+			SEQ	= #seq#
+	]]>	
+	</update>
+	<select id="routerTypeSelect" parameterClass="RouterType" resultMap="routerTypeMap">
+	<![CDATA[	
+		SELECT 	
+				SEQ, 
+				NAME, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME
+		FROM 
+				ROUTER_TYPE
+		WHERE
+				SEQ = #seq#
+	]]>
+	</select>
+	<select id="routerTypeList" resultMap="routerTypeMap">
+	<![CDATA[	
+		SELECT 	
+				SEQ, 
+				NAME, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME
+		FROM 
+				ROUTER_TYPE
+		WHERE
+				1=1
+				AND USE_YN = 'Y'
+		ORDER BY SEQ
+	]]>
+	</select>
+	<!-- <select id="srchUserMonitorCnt" parameterClass="SrchUserMonitorParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT
+				COUNT(USER_SEQ) AS CNT
+		FROM
+				(SELECT
+						USER_SEQ, COUNT(SEQ) AS CNT	
+				FROM
+						RESERVATION
+				WHERE
+						1=1
+						AND !(STATUS = 'T' AND FLAG = 'C')
+						AND !(STATUS = 'C' AND FLAG = 'F')
+						AND !(STATUS = 'C' AND FLAG = 'R')
+				GROUP BY 
+						USER_SEQ
+				) AS CNT
+	]]>
+	</select> -->
+	<select id="srchUserMonitorCnt" parameterClass="SrchUserMonitorParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT	COUNT(A.USER_SEQ) AS CNT
+		FROM	(	SELECT	USER_SEQ
+					FROM	RESERVATION
+					WHERE	VERSION_COMMIT = 'Y'
+					GROUP BY	USER_SEQ
+				) A
+	]]>
+	</select>
+	<!-- <select id="srchUserMonitorList" parameterClass="SrchUserMonitorParam" resultMap="userMonitorMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, C.CNT, C.ID, C.NAME
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT
+								D.USER_SEQ AS SEQ, COUNT(D.SEQ) AS CNT, E.ID, E.NAME	
+						FROM
+								RESERVATION D LEFT OUTER JOIN USER AS E
+						ON
+								D.USER_SEQ = E.SEQ
+						WHERE
+								1=1
+								AND !(D.STATUS = 'T' AND D.FLAG = 'C')
+								AND !(D.STATUS = 'C' AND D.FLAG = 'F')
+								AND !(D.STATUS = 'C' AND D.FLAG = 'R')
+								AND D.USER_SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+						GROUP BY 
+								E.ID DESC
+						ORDER BY $sortKey$ $sortType$) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				C.SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select> -->
+	<select id="srchUserMonitorList" parameterClass="SrchUserMonitorParam" resultMap="userMonitorMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, C.CNT, C.ID, C.NAME
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT
+								D.USER_SEQ AS SEQ, COUNT(D.SEQ) AS CNT, E.ID, E.NAME	
+						FROM
+								RESERVATION D LEFT OUTER JOIN USER AS E
+						ON
+								D.USER_SEQ = E.SEQ
+						WHERE
+								VERSION_COMMIT = 'Y'
+						GROUP BY 
+								E.ID DESC
+						ORDER BY $sortKey$ $sortType$) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				1=1
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select>
+	<!-- <select id="routerDTOList" parameterClass="java.util.Map" resultMap="routerDTOListMap">
+	<![CDATA[
+		SELECT 	
+				SEQ, 
+				GROUP_SEQ, 
+				SITE_NAME, 
+				KIND, 
+				URN, 
+				IP, 
+				ROUTER_TYPE_SEQ, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME,
+				FAULT_YN
+		FROM 
+				ROUTER 
+		WHERE
+				GROUP_SEQ = (SELECT MAX(GROUP_SEQ) FROM ROUTER)
+		ORDER BY KIND DESC, SEQ ASC
+	]]>
+	</select> -->
+	<select id="routerDTOList" parameterClass="java.util.Map" resultMap="routerDTOListMap">
+	<![CDATA[
+		SELECT 	SEQ, 
+				GROUP_SEQ, 
+				SITE_NAME, 
+				KIND, 
+				URN, 
+				IP, 
+				ROUTER_TYPE_SEQ, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME,
+				FAULT_YN
+		FROM 	ROUTER 
+		WHERE	use_yn	= 'Y'
+		ORDER BY site_name asc
+	]]>
+	</select>
+	<select id="interfaceInfoList" parameterClass="java.util.Map" resultMap="interfaceInfoDTOMap">
+	<![CDATA[
+		SELECT 	
+				SEQ, 
+				GROUP_SEQ, 
+				ROUTER_SEQ, 
+				PRIMARY_IP, 
+				SECONDARY_IP, 
+				PRIMARY_BW,  
+				SECONDARY_BW,
+				LINK_INTERFACE_SEQ, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME, 
+				P_FAULT_YN,
+				S_FAULT_YN,
+				USE_LINE
+		FROM 
+				INTERFACE_INFO
+		WHERE
+				ROUTER_SEQ IN (SELECT SEQ FROM ROUTER WHERE KIND = #kind#)
+				AND GROUP_SEQ = (SELECT MAX(GROUP_SEQ) FROM INTERFACE_INFO)
+		ORDER BY SEQ ASC
+	]]>
+	</select>
+	<select id="linkInterfaceInfoSelect" parameterClass="InterfaceInfo" resultMap="interfaceInfoMap">
+	<![CDATA[
+		SELECT 	
+				SEQ, 
+				GROUP_SEQ, 
+				ROUTER_SEQ, 
+				PRIMARY_IP, 
+				SECONDARY_IP, 
+				PRIMARY_BW,  
+				SECONDARY_BW,
+				LINK_INTERFACE_SEQ, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME, 
+				P_FAULT_YN,
+				S_FAULT_YN,
+				USE_LINE
+		FROM 
+				INTERFACE_INFO
+		WHERE
+				SEQ = #seq#
+	]]>
+	</select>
+	<!-- <select id="interfaceInfoSelect" parameterClass="InterfaceInfoDTO" resultMap="interfaceInfoDTOMap">
+	<![CDATA[
+		SELECT 	
+				SEQ, 
+				GROUP_SEQ, 
+				ROUTER_SEQ, 
+				PRIMARY_IP, 
+				SECONDARY_IP, 
+				PRIMARY_BW,  
+				SECONDARY_BW,
+				LINK_INTERFACE_SEQ, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME, 
+				P_FAULT_YN,
+				S_FAULT_YN,
+				USE_LINE
+		FROM 
+				INTERFACE_INFO
+		WHERE
+				ROUTER_SEQ = #router_seq#
+	]]>
+	</select> -->
+	<select id="interfaceInfoSelect" parameterClass="InterfaceInfoDTO" resultMap="interfaceInfoDTOMap">
+	<![CDATA[
+		SELECT 	
+				SEQ, 
+				GROUP_SEQ, 
+				ROUTER_SEQ, 
+				PRIMARY_IP, 
+				SECONDARY_IP, 
+				PRIMARY_BW,  
+				SECONDARY_BW,
+				LINK_INTERFACE_SEQ, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME, 
+				P_FAULT_YN,
+				S_FAULT_YN,
+				USE_LINE,
+				local_id,
+				local_nm
+		FROM 
+				INTERFACE_INFO
+		WHERE
+				ROUTER_SEQ = #router_seq#
+	]]>
+	</select>
+	<select id="routerDTOSelect" parameterClass="Router" resultMap="routerDTOMap">
+	<![CDATA[
+		SELECT 	
+				SEQ, 
+				GROUP_SEQ, 
+				SITE_NAME, 
+				KIND, 
+				URN, 
+				IP, 
+				ROUTER_TYPE_SEQ, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME,
+				FAULT_YN
+		FROM 
+				ROUTER
+		WHERE
+				SEQ = #seq#
+	]]>
+	</select>
+	<select id="useRouterDTOSelect" parameterClass="Router" resultMap="routerDTOMap">
+	<![CDATA[
+		SELECT 	
+				SEQ, 
+				GROUP_SEQ, 
+				SITE_NAME, 
+				KIND, 
+				URN, 
+				IP, 
+				ROUTER_TYPE_SEQ, 
+				USE_YN, 
+				CREATETIME, 
+				DELTIME,
+				FAULT_YN
+		FROM 
+				ROUTER
+		WHERE
+				USE_YN = 'Y'
+				AND URN = (SELECT URN FROM ROUTER WHERE SEQ = #seq#)
+	]]>
+	</select>
+	<select id="routerGroupSeqSelect" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT
+				IFNULL(MAX(GROUP_SEQ), 0) + 1 AS CNT
+		FROM
+				ROUTER
+	]]>
+	</select>
+	<insert id="routerInsert" parameterClass="Router">
+	<![CDATA[
+		INSERT INTO ROUTER 
+		(
+			GROUP_SEQ, 
+			SITE_NAME, 
+			KIND, 
+			URN, 
+			IP, 
+			ROUTER_TYPE_SEQ, 
+			USE_YN, 
+			CREATETIME
+		)
+		VALUES
+		(
+			#group_seq#, 
+			#site_name#, 
+			#kind#, 
+			#urn#, 
+			#ip#, 
+			#router_type_seq#, 
+			'N', 
+			NOW()
+		);
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<insert id="interfaceInfoInsert" parameterClass="InterfaceInfo">
+	<![CDATA[
+		INSERT INTO INTERFACE_INFO 
+		(
+			GROUP_SEQ, 
+			ROUTER_SEQ, 
+			PRIMARY_IP, 
+			SECONDARY_IP, 
+			PRIMARY_BW, 
+			SECONDARY_BW,  
+			USE_YN, 
+			CREATETIME
+		)
+		VALUES
+		(
+			#group_seq#, 
+			#router_seq#, 
+			#primary_ip#, 
+			#secondary_ip#, 
+			#primary_bw#, 
+			#secondary_bw#,  
+			'N', 
+			NOW()
+		);
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="interfaceInfoLinkUpdate" parameterClass="InterfaceInfo">
+	<![CDATA[	
+		UPDATE INTERFACE_INFO 
+		SET	LINK_INTERFACE_SEQ = #link_interface_seq#
+		WHERE
+			SEQ	= #seq#
+	]]>	
+	</update>
+	
+	<update id="nsaInitUpdate1">
+	<![CDATA[	
+		UPDATE ROUTER SET USE_YN = 'Y'
+		WHERE GROUP_SEQ = (SELECT GROUP_SEQ FROM (SELECT MAX(GROUP_SEQ) AS GROUP_SEQ FROM ROUTER) AS GROUP_SEQ);
+	]]>
+	</update>	
+	<update id="nsaInitUpdate2">
+	<![CDATA[	
+		UPDATE ROUTER SET USE_YN = 'N'
+		WHERE GROUP_SEQ != (SELECT GROUP_SEQ FROM (SELECT MAX(GROUP_SEQ) AS GROUP_SEQ FROM ROUTER) AS GROUP_SEQ);
+	]]>
+	</update>	
+	<update id="nsaInitUpdate3">
+	<![CDATA[	
+		UPDATE INTERFACE_INFO SET USE_YN = 'Y'
+		WHERE GROUP_SEQ = (SELECT GROUP_SEQ FROM (SELECT MAX(GROUP_SEQ) AS GROUP_SEQ FROM INTERFACE_INFO) AS GROUP_SEQ);
+	]]>
+	</update>	
+	<update id="nsaInitUpdate4">
+	<![CDATA[	
+		UPDATE INTERFACE_INFO SET USE_YN = 'N'
+		WHERE GROUP_SEQ != (SELECT GROUP_SEQ FROM (SELECT MAX(GROUP_SEQ) AS GROUP_SEQ FROM INTERFACE_INFO) AS GROUP_SEQ);
+	]]>
+	</update>
+	<update id="nsaInitUpdate5">
+	<![CDATA[	
+		UPDATE GNPR_INFO SET USE_YN = 'Y'
+		WHERE GROUP_SEQ = (SELECT GROUP_SEQ FROM (SELECT MAX(GROUP_SEQ) AS GROUP_SEQ FROM GNPR_INFO) AS GROUP_SEQ);
+	]]>
+	</update>	
+	<update id="nsaInitUpdate6">
+	<![CDATA[	
+		UPDATE GNPR_INFO SET USE_YN = 'N'
+		WHERE GROUP_SEQ != (SELECT GROUP_SEQ FROM (SELECT MAX(GROUP_SEQ) AS GROUP_SEQ FROM GNPR_INFO) AS GROUP_SEQ);
+	]]>
+	</update>
+	
+	<insert id="gnprInfoInsert" parameterClass="GnprInfo">
+	<![CDATA[
+		INSERT INTO GNPR_INFO 
+		(
+			GROUP_SEQ, 
+			GNPR_ID, 
+			SITE_A_SEQ, 
+			SITE_A_ROUTER_IP, 
+			SITE_A_INTERFACE_IP, 
+			SITE_B_SEQ, 
+			SITE_B_ROUTER_IP, 
+			SITE_B_INTERFACE_IP, 
+			USE_YN, 
+			CREATETIME
+		)
+		VALUES
+		(
+			#group_seq#, 
+			#gnpr_id#, 
+			(SELECT SEQ FROM INTERFACE_INFO WHERE (PRIMARY_IP = #site_a_interface_ip# OR SECONDARY_IP = #site_a_interface_ip#) AND GROUP_SEQ = #group_seq#), 
+			#site_a_router_ip#, 
+			#site_a_interface_ip#, 
+			(SELECT SEQ FROM INTERFACE_INFO WHERE (PRIMARY_IP = #site_b_interface_ip# OR SECONDARY_IP = #site_b_interface_ip#) AND GROUP_SEQ = #group_seq#), 
+			#site_b_router_ip#, 
+			#site_b_interface_ip#, 
+			'N', 
+			NOW()
+		)
+	]]>
+	</insert>
+	<update id="reservationAllTerminate">
+	<![CDATA[
+		UPDATE RESERVATION SET STATUS = 'T', FLAG = 'C'
+	]]>	
+	</update>
+	
+	<!-- <insert id="eventInsert" parameterClass="Event">
+	<![CDATA[
+		INSERT INTO EVENT(
+			CAUSE, DESCRIPTION, RESTORE_YN, LINE, CREATETIME
+		)
+		VALUES(
+			#cause#, #description#, #restore_yn#, #line#, NOW()
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert> -->
+	<insert id="eventInsert" parameterClass="Event">
+	<![CDATA[
+		INSERT INTO EVENT(
+			CAUSE, DESCRIPTION, CREATETIME, ROUTER
+		)
+		VALUES(
+			#cause#, #description#, NOW(), #router#
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	
+	<!-- <insert id="eventLogInsert" parameterClass="EventLog">
+	<![CDATA[
+		INSERT INTO EVENT_LOG(
+			EVENT_SEQ, FAULT_ROUTER, FAULT_INTERFACE, LINK_ROUTER, LINK_INTERFACE, FAULT_URN, LINK_URN
+		)
+		VALUES(
+			#event_seq#, #fault_router#, #fault_interface#, #link_router#, #link_interface#,
+			(SELECT URN FROM ROUTER WHERE IP = #fault_router# AND USE_YN = 'Y'), 
+			(SELECT URN FROM ROUTER WHERE IP = #link_router# AND USE_YN = 'Y')
+		)
+	]]>
+	</insert> -->
+	<insert id="eventLogInsert" parameterClass="java.util.Map">
+	<![CDATA[
+		INSERT INTO EVENT_LOG(
+			EVENT_SEQ, FAULT_INTERFACE
+		)
+		VALUES(
+			#event_seq#, #fault_interface#
+		)
+	]]>
+	</insert>
+	
+	<update id="eventRestoreUpdate" parameterClass="EventLog">
+	<![CDATA[
+		UPDATE EVENT SET RESTORE_YN = 'Y', DESCRIPTION = #description#
+		WHERE  
+				SEQ IN (
+					SELECT 	EVENT_SEQ 
+					FROM 	EVENT_LOG 
+					WHERE 
+						(FAULT_ROUTER = #fault_router# 
+						AND FAULT_INTERFACE = #fault_interface#) 
+						OR 
+						(FAULT_ROUTER = #link_router# 
+						AND FAULT_INTERFACE = #link_interface#)
+					)
+				AND RESTORE_YN = 'N'
+	]]>	
+	</update>
+	<update id="eventLineUpdate" parameterClass="EventLog">
+	<![CDATA[
+		UPDATE EVENT SET LINE = #line#
+		WHERE  
+				SEQ = (
+					SELECT 	MAX(EVENT_SEQ) 
+					FROM 	EVENT_LOG 
+					WHERE 
+						(FAULT_ROUTER = #fault_router# 
+						AND FAULT_INTERFACE = #fault_interface#) 
+						OR 
+						(FAULT_ROUTER = #link_router# 
+						AND FAULT_INTERFACE = #link_interface#)
+					)
+				AND CAUSE = '1'
+	]]>	
+	</update>
+	<select id="srchEventCnt" parameterClass="SrchEventParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT 	
+				COUNT(SEQ) AS CNT
+		FROM 
+				EVENT
+		WHERE 
+				1=1
+	]]>
+	</select>
+	<select id="srchEventList" parameterClass="SrchEventParam" resultMap="eventMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, C.CAUSE, C.DESCRIPTION, 
+				C.RESTORE_YN, C.LINE, C.CREATETIME, C.ROUTER
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT
+								SEQ, CAUSE, DESCRIPTION, 
+								RESTORE_YN, LINE, CREATETIME, ROUTER
+						FROM
+								EVENT
+						WHERE
+								1=1
+								AND SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+						ORDER BY $sortKey$ $sortType$) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				C.SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select>
+	<select id="eventLogList" parameterClass="EventLog" resultMap="eventLogMap">
+	<![CDATA[
+		SELECT 
+				SEQ, EVENT_SEQ, 
+				FAULT_ROUTER, FAULT_INTERFACE, 
+				LINK_ROUTER, LINK_INTERFACE, LINE,
+				FAULT_URN, LINK_URN
+		FROM
+				EVENT_LOG
+		WHERE
+				EVENT_SEQ = #event_seq#
+	]]>			
+	</select>
+	<insert id="errorLogInsert" parameterClass="ErrorLog">
+	<![CDATA[
+		INSERT INTO ERROR_LOG(
+			URL, NAME, LOG_MESSAGE, CREATETIME
+		)
+		VALUES(
+			#url#, #name#, #log_message#, 
+			NOW()
+		)
+	]]>
+	</insert>
+	<select id="srchErrorCnt" parameterClass="SrchErrorParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT 	
+				COUNT(SEQ) AS CNT
+		FROM 
+				ERROR_LOG
+		WHERE 
+				1=1
+	]]>
+	</select>
+	<select id="srchErrorList" parameterClass="SrchErrorParam" resultMap="errorLogMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, C.URL, C.NAME, 
+				C.LOG_MESSAGE, C.CREATETIME
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT
+								SEQ, URL, NAME, 
+								LOG_MESSAGE, CREATETIME
+						FROM
+								ERROR_LOG
+						WHERE
+								1=1
+								AND SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+						ORDER BY $sortKey$ $sortType$) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				C.SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select>
+	<update id="interfaceInfoFault" parameterClass="EventLog">
+	<![CDATA[
+		UPDATE INTERFACE_INFO 
+		SET 
+	]]>
+		<isEqual property="cause" compareValue="1">
+			<isEqual property="line" compareValue="P">
+			<![CDATA[
+				P_FAULT_YN = TRUE
+			]]>	
+			</isEqual>
+			<isEqual property="line" compareValue="S">
+			<![CDATA[
+				S_FAULT_YN = TRUE
+			]]>	
+			</isEqual>
+		</isEqual>	
+		<isEqual property="cause" compareValue="2">
+			<isEqual property="line" compareValue="P">
+			<![CDATA[
+				P_FAULT_YN = FALSE
+			]]>
+			</isEqual>
+			<isEqual property="line" compareValue="S">
+			<![CDATA[
+				S_FAULT_YN = FALSE
+			]]>
+			</isEqual>
+		</isEqual>
+		<isEqual property="cause" compareValue="3">
+			<![CDATA[
+				P_FAULT_YN = TRUE
+			]]>
+		</isEqual>	
+		<isEqual property="cause" compareValue="4">
+			<![CDATA[
+				P_FAULT_YN = FALSE
+			]]>
+		</isEqual>	
+		<isEqual property="cause" compareValue="5">
+			<![CDATA[
+				USE_LINE = 'S'
+			]]>
+		</isEqual>	
+		<isEqual property="cause" compareValue="6">
+		<![CDATA[
+				USE_LINE = 'P'
+		]]>		
+		</isEqual>
+		<isEqual property="cause" compareValue="7">
+		<![CDATA[
+				USE_LINE = 'P'
+		]]>		
+		</isEqual>	
+		<isEqual property="cause" compareValue="8">
+		<![CDATA[
+				USE_LINE = 'S'
+		]]>		
+		</isEqual>
+	<![CDATA[	
+		WHERE
+	]]>
+		<isEqual property="cause" compareValue="1">
+			<isEqual property="line" compareValue="P">
+			<![CDATA[
+				PRIMARY_IP IN (#fault_interface#, #link_interface#)
+			]]>
+			</isEqual>
+			<isEqual property="line" compareValue="S">
+			<![CDATA[
+				SECONDARY_IP IN (#fault_interface#, #link_interface#)
+			]]>
+			</isEqual>
+		</isEqual>
+		<isEqual property="cause" compareValue="2">
+			<isEqual property="line" compareValue="P">
+			<![CDATA[
+				PRIMARY_IP IN (#fault_interface#, #link_interface#)
+			]]>
+			</isEqual>
+			<isEqual property="line" compareValue="S">
+			<![CDATA[
+				SECONDARY_IP IN (#fault_interface#, #link_interface#)
+			]]>
+			</isEqual>
+		</isEqual>
+		<isEqual property="cause" compareValue="3">
+		<![CDATA[
+				PRIMARY_IP IN (#fault_interface#, #link_interface#)
+		]]>
+		</isEqual>
+		<isEqual property="cause" compareValue="4">
+		<![CDATA[
+				PRIMARY_IP IN (#fault_interface#, #link_interface#)
+		]]>
+		</isEqual>
+		<isEqual property="cause" compareValue="5">
+		<![CDATA[
+				PRIMARY_IP IN (#fault_interface#, #link_interface#)
+		]]>
+		</isEqual>
+		<isEqual property="cause" compareValue="6">
+		<![CDATA[
+				PRIMARY_IP IN (#fault_interface#, #link_interface#)
+		]]>
+		</isEqual>
+		<isEqual property="cause" compareValue="7">
+		<![CDATA[
+				PRIMARY_IP IN (#fault_interface#, #link_interface#)
+		]]>
+		</isEqual>
+		<isEqual property="cause" compareValue="8">
+		<![CDATA[
+				PRIMARY_IP IN (#fault_interface#, #link_interface#)
+		]]>
+		</isEqual>
+	<![CDATA[				
+				AND USE_YN = 'Y'
+	]]>
+	</update>
+	<update id="routerFault" parameterClass="EventLog">
+	<![CDATA[
+		UPDATE ROUTER 
+		SET 
+	]]>	
+		<isEqual property="cause" compareValue="3">
+		<![CDATA[
+				FAULT_YN = TRUE
+		]]>		
+		</isEqual>	
+		<isEqual property="cause" compareValue="4">
+		<![CDATA[
+				FAULT_YN = FALSE
+		]]>		
+		</isEqual>
+	<![CDATA[	
+		WHERE
+				IP = #fault_router#
+				AND USE_YN = 'Y'
+	]]>
+	</update>
+	<update id="reservationFault" parameterClass="EventLog">
+	<![CDATA[
+		UPDATE RESERVATION 
+		SET 
+	]]>
+		<isEqual property="cause" compareValue="1">
+		<![CDATA[
+				TROUBLE_YN = 'Y'
+		]]>		
+		</isEqual>	
+		<isEqual property="cause" compareValue="2">
+		<![CDATA[
+				TROUBLE_YN = 'N'
+		]]>		
+		</isEqual>	
+		<isEqual property="cause" compareValue="3">
+		<![CDATA[
+				TROUBLE_YN = 'Y'
+		]]>		
+		</isEqual>	
+		<isEqual property="cause" compareValue="4">
+		<![CDATA[
+				TROUBLE_YN = 'N'
+		]]>		
+		</isEqual>	
+	<![CDATA[
+		WHERE
+	]]>	
+		<isEqual property="cause" compareValue="1">
+		<![CDATA[
+				(SOURCE_STP_SEQ IN (SELECT ROUTER_SEQ FROM INTERFACE_INFO WHERE USE_YN = 'Y' AND P_FAULT_YN = TRUE AND S_FAULT_YN = TRUE AND (PRIMARY_IP IN (#fault_interface#, #link_interface#) OR SECONDARY_IP IN (#fault_interface#, #link_interface#))) 
+				OR DEST_STP_SEQ IN (SELECT ROUTER_SEQ FROM INTERFACE_INFO WHERE USE_YN = 'Y' AND P_FAULT_YN = TRUE AND S_FAULT_YN = TRUE AND (PRIMARY_IP IN (#fault_interface#, #link_interface#) OR SECONDARY_IP IN (#fault_interface#, #link_interface#))) )
+		]]>		
+		</isEqual>
+		<isEqual property="cause" compareValue="2">
+		<![CDATA[
+				(SOURCE_STP_SEQ IN (SELECT ROUTER_SEQ FROM INTERFACE_INFO WHERE USE_YN = 'Y' AND (P_FAULT_YN = FALSE OR S_FAULT_YN = FALSE) AND (PRIMARY_IP IN (#fault_interface#, #link_interface#) OR SECONDARY_IP IN (#fault_interface#, #link_interface#))) 
+				OR DEST_STP_SEQ IN (SELECT ROUTER_SEQ FROM INTERFACE_INFO WHERE USE_YN = 'Y' AND (P_FAULT_YN = FALSE OR S_FAULT_YN = FALSE) AND (PRIMARY_IP IN (#fault_interface#, #link_interface#) OR SECONDARY_IP IN (#fault_interface#, #link_interface#))) )
+		]]>		
+		</isEqual>
+		<isEqual property="cause" compareValue="3">
+		<![CDATA[
+				(SOURCE_STP_SEQ = (SELECT SEQ FROM ROUTER WHERE USE_YN = 'Y' AND IP = #fault_router#) 
+				OR DEST_STP_SEQ = (SELECT SEQ FROM ROUTER WHERE USE_YN = 'Y' AND IP = #link_router#) )
+		]]>		
+		</isEqual>
+		<isEqual property="cause" compareValue="4">
+		<![CDATA[
+				(SOURCE_STP_SEQ = (SELECT SEQ FROM ROUTER WHERE USE_YN = 'Y' AND IP = #fault_router#) 
+				OR DEST_STP_SEQ = (SELECT SEQ FROM ROUTER WHERE USE_YN = 'Y' AND IP = #link_router#) )
+		]]>		
+		</isEqual>			
+	<![CDATA[			
+				AND !(STATUS = 'T' AND FLAG = 'C')
+	]]>
+	</update>
+	
+	
+	<select id="cdDwList" parameterClass="java.util.Map" resultMap="cdDwListMap">
+	<![CDATA[
+		SELECT 		U.CD_UP_SEQ	AS CD_UP_SEQ,
+					U.NM		AS CD_UP_NM,
+			        D.CD_DW_SEQ	AS CD_DW_SEQ,
+			        D.NM		AS CD_DW_NM,
+			        d.val		as cd_dw_val
+		FROM 		CD_UP U INNER JOIN CD_DW D
+		ON			U.CD_UP_SEQ	= D.CD_UP_SEQ
+		WHERE		U.CD_UP_SEQ	= #cdUpSeq#
+		ORDER BY	D.CD_DW_SEQ ASC
+	]]>
+	</select>
+	
+	<select id="providerNsaList" resultMap="providerNsaListMap">
+	<![CDATA[
+		SELECT 		NSA_ADDR		AS NSA_ADDR,
+					NSA_NM			AS NSA_NM,
+			        ADMIN_CONTACT	AS ADMIN_CONTACT,
+			        ENDPOINT_ADDR	AS ENDPOINT_ADDR,
+			        REF_URL			AS REF_URL
+		FROM 		PROVIDER_NSA
+		ORDER BY	NSA_NM ASC
+	]]>
+	</select>
+	<select id="providerNsaSelect" parameterClass="ProviderNsa" resultMap="providerNsaListMap">
+	<![CDATA[
+		SELECT 		NSA_ADDR		AS NSA_ADDR,
+					NSA_NM			AS NSA_NM,
+			        ADMIN_CONTACT	AS ADMIN_CONTACT,
+			        ENDPOINT_ADDR	AS ENDPOINT_ADDR,
+			        REF_URL			AS REF_URL
+		FROM 		PROVIDER_NSA
+		where		NSA_ADDR = #nsa_addr#
+	]]>
+	</select>
+	<select id="stpNetworkList" resultMap="stpNetworkListMap">
+	<![CDATA[
+		SELECT 		NETWORK_ID			AS NETWORK_ID,
+					NETWORK_NM			AS NETWORK_NM,
+			        FAULT_YN			AS NETWORK_FAULT_YN,
+			        NSA_ADDR			AS NSA_ADDR
+		FROM 		STP_NETWORK
+		ORDER BY	NETWORK_NM ASC
+	]]>
+	</select>
+	<select id="stpLocalList" resultMap="stpLocalListMap">
+	<![CDATA[
+		SELECT 		N.NETWORK_ID		AS NETWORK_ID,
+					N.NETWORK_NM		AS NETWORK_NM,
+			        N.FAULT_YN			AS NETWORK_FAULT_YN,
+			        N.NSA_ADDR			AS NSA_ADDR,
+			        L.LOCAL_ID			AS LOCAL_ID,
+					L.LOCAL_NM			AS LOCAL_NM,
+			        L.FAULT_YN			AS LOCAL_FAULT_YN
+		FROM 		STP_NETWORK N INNER JOIN STP_LOCAL L
+		ON			N.NETWORK_ID = L.NETWORK_ID
+		ORDER BY	N.NETWORK_NM ASC, L.LOCAL_NM ASC
+	]]>
+	</select>
+	<select id="stpLocalListSelect" parameterClass="java.util.Map" resultMap="stpLocalListMap">
+	<![CDATA[
+		SELECT 		N.NETWORK_ID		AS NETWORK_ID,
+					N.NETWORK_NM		AS NETWORK_NM,
+			        N.FAULT_YN			AS NETWORK_FAULT_YN,
+			        N.NSA_ADDR			AS NSA_ADDR,
+			        L.LOCAL_ID			AS LOCAL_ID,
+					L.LOCAL_NM			AS LOCAL_NM,
+			        L.FAULT_YN			AS LOCAL_FAULT_YN
+		FROM 		STP_NETWORK N INNER JOIN STP_LOCAL L
+		ON			N.NETWORK_ID = L.NETWORK_ID
+		WHERE		L.NETWORK_ID = #network_id#
+		ORDER BY	N.NETWORK_NM ASC, L.LOCAL_NM ASC
+	]]>
+	</select>
+	<select id="stpVlanList" resultMap="stpVlanListMap">
+	<![CDATA[
+		SELECT 		N.NETWORK_ID		AS NETWORK_ID,
+					N.NETWORK_NM		AS NETWORK_NM,
+			        N.FAULT_YN			AS NETWORK_FAULT_YN,
+			        N.NSA_ADDR			AS NSA_ADDR,
+			        L.LOCAL_ID			AS LOCAL_ID,
+					L.LOCAL_NM			AS LOCAL_NM,
+			        L.FAULT_YN			AS LOCAL_FAULT_YN,
+            		V.VLAN_SEQ			AS VLAN_SEQ
+		FROM 		STP_NETWORK N INNER JOIN STP_LOCAL L INNER JOIN STP_VLAN V
+		ON			N.NETWORK_ID	= L.NETWORK_ID
+		AND			L.NETWORK_ID	= V.NETWORK_ID
+		AND			L.LOCAL_ID		= V.LOCAL_ID
+		ORDER BY	N.NETWORK_NM ASC, L.LOCAL_NM ASC, V.VLAN_SEQ ASC
+	]]>
+	</select>
+	
+	
+	<delete id="providerNsaDeleteAll">
+	<![CDATA[
+		DELETE FROM PROVIDER_NSA 
+	]]>
+	</delete>
+	<delete id="stpNetworkDeleteAll">
+	<![CDATA[
+		DELETE FROM STP_NETWORK 
+	]]>
+	</delete>
+	<delete id="stpLocalDeleteAll">
+	<![CDATA[
+		DELETE FROM STP_LOCAL 
+	]]>
+	</delete>
+	<delete id="stpVlanDeleteAll">
+	<![CDATA[
+		DELETE FROM STP_VLAN 
+	]]>
+	</delete>
+	
+	<insert id="providerNsaInsert" parameterClass="java.util.Map">
+	<![CDATA[
+		INSERT INTO PROVIDER_NSA 
+		(
+			NSA_ADDR,
+			NSA_NM,
+			ADMIN_CONTACT,
+			ENDPOINT_ADDR,
+			REF_URL	
+		)
+		VALUES
+		(
+			#nsa_addr#,			
+			#nsa_nm#, 
+			#admin_contact#, 
+			#endpoint_addr#, 
+			#ref_url#
+		)
+	]]>
+	</insert>
+	<insert id="stpNetworkInsert" parameterClass="java.util.Map">
+	<![CDATA[
+		INSERT INTO STP_NETWORK 
+		(
+			NETWORK_ID,
+			NETWORK_NM,
+			FAULT_YN,
+			NSA_ADDR	
+		)
+		VALUES
+		(
+			#network_id#,			
+			#network_nm#, 
+			#fault_yn#, 
+			#nsa_addr#
+		)
+	]]>
+	</insert>
+	<insert id="stpLocalInsert" parameterClass="java.util.Map">
+	<![CDATA[
+		INSERT INTO STP_LOCAL 
+		(
+			NETWORK_ID,
+			LOCAL_ID,
+			LOCAL_NM,
+			FAULT_YN	
+		)
+		VALUES
+		(
+			#network_id#,			
+			#local_id#, 
+			#local_nm#, 
+			#fault_yn#
+		)
+	]]>
+	</insert>
+	<insert id="stpVlanInsert" parameterClass="java.util.Map">
+	<![CDATA[
+		INSERT INTO STP_VLAN 
+		(
+			NETWORK_ID,
+			LOCAL_ID,
+			VLAN_SEQ	
+		)
+		VALUES
+		(
+			#network_id#,			
+			#local_id#, 
+			#vlan_seq#
+		)
+	]]>
+	</insert>
+	
+	<update id="providerNsaNmUpdate" parameterClass="java.util.Map">
+	<![CDATA[	
+		UPDATE	PROVIDER_NSA 
+		SET		NSA_NM	= #nsa_nm#
+		WHERE	NSA_ADDR= #nsa_addr#
+	]]>	
+	</update>
+	<update id="networkNmUpdate" parameterClass="java.util.Map">
+	<![CDATA[	
+		UPDATE	STP_NETWORK 
+		SET		NETWORK_NM	= #network_nm#
+		WHERE	NETWORK_ID	= #network_id#
+	]]>	
+	</update>
+	<update id="localNmUpdate" parameterClass="java.util.Map">
+	<![CDATA[	
+		UPDATE	STP_LOCAL 
+		SET		LOCAL_NM	= #local_nm#
+		WHERE	NETWORK_ID	= #network_id#
+		AND		LOCAL_ID	= #local_id#
+	]]>	
+	</update>
+	
+	<!-- sql area end -->
+</sqlMap>

@@ -1,0 +1,2132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 
+		'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+ 
+<sqlMap namespace="nsa">
+
+	<!-- alias area start -->
+	<typeAlias alias="Reservation" 				type="com.netmng.vo.Reservation" />
+	<typeAlias alias="Ero" 						type="com.netmng.vo.Ero" />
+	<typeAlias alias="NotificationLog" 			type="com.netmng.vo.NotificationLog" />
+	<typeAlias alias="ReservationFav" 			type="com.netmng.vo.ReservationFav" />
+	<typeAlias alias="ReservationDTO" 			type="com.netmng.dto.nsa.ReservationDTO" />
+	<typeAlias alias="SrchReserveParam" 		type="com.netmng.param.nsa.SrchReserveParam" />
+	<typeAlias alias="SrchUserMonitorParam" 	type="com.netmng.param.adm.SrchUserMonitorParam" />
+	<typeAlias alias="SrchInterMonitorParam" 	type="com.netmng.param.adm.SrchInterMonitorParam" />
+	<!-- alias area end -->
+
+	<!-- resultMap area start -->
+	<resultMap id="reservationMap" 					class="Reservation">		
+		<result property = "seq" 							column = "SEQ" 					/>
+		<result property = "correlation_id" 				column = "CORRELATION_ID" 		/>
+		<result property = "host_ip" 						column = "HOST_IP" 				/>
+		<result property = "dest_ip" 						column = "DEST_IP" 				/>
+		<result property = "reply_to" 						column = "REPLY_TO" 			/>
+		<result property = "requester_nsa" 					column = "REQUESTER_NSA" 		/>
+		<result property = "provider_nsa" 					column = "PROVIDER_NSA" 		/>
+		<result property = "global_reservation_id" 			column = "GLOBAL_RESERVATION_ID"/>
+		<result property = "description" 					column = "DESCRIPTION" 			/>
+		<result property = "connection_id" 					column = "CONNECTION_ID" 		/>
+		<result property = "start_time" 					column = "START_TIME" 			/>
+		<result property = "end_time" 						column = "END_TIME" 			/>
+		<result property = "desired" 						column = "DESIRED" 				/>
+		<result property = "minimum" 						column = "MINIMUM" 				/>
+		<result property = "maximum" 						column = "MAXIMUM" 				/>
+		<result property = "directionality" 				column = "DIRECTIONALITY" 		/>
+		<result property = "source_stp_seq" 				column = "SOURCE_STP_SEQ" 		/>
+		<result property = "dest_stp_seq" 					column = "DEST_STP_SEQ" 		/>
+		<result property = "user_seq" 						column = "USER_SEQ" 			/>
+		<result property = "status" 						column = "STATUS" 				/>
+		<result property = "flag" 							column = "FLAG" 				/>
+		<result property = "createtime" 					column = "CREATETIME" 			/>
+		<result property = "type"	 						column = "TYPE" 				/>
+		<result property = "trouble_yn"	 					column = "TROUBLE_YN" 			/>
+		<result property = "symmetricPath"	 				column = "SYMMETRIC_PATH" 		/>
+		<result property = "sourceVLAN"	 					column = "SOURCE_VLAN" 			/>
+		<result property = "destVLAN"	 					column = "DEST_VLAN" 			/>
+		<result property = "version"	 					column = "VERSION" 				/>
+		<result property = "version_commit"					column = "VERSION_COMMIT" 		/>
+		<result property = "mtu"	 						column = "MTU" 					/>
+		<result property = "burstsize"	 					column = "BURSTSIZE" 			/>
+		<result property = "source_local_id"	 			column = "SOURCE_LOCAL_ID" 		/>
+		<result property = "dest_local_id"	 				column = "DEST_LOCAL_ID" 		/>
+		<result property = "reserve_fin"	 				column = "RESERVE_FIN" 			/>
+		<result property = "reserve_state"	 				column = "RESERVE_STATE" 		/>
+		<result property = "provision_state"	 			column = "PROVISION_STATE" 		/>
+		<result property = "life_cycle"	 					column = "LIFE_CYCLE" 			/>
+		<result property = "data_plane"	 					column = "DATA_PLANE" 			/>
+		<result property = "source_network_id"	 			column = "SOURCE_NETWORK_ID" 	/>
+		<result property = "dest_network_id"	 			column = "DEST_NETWORK_ID" 		/>	
+		<result property = "state_nm"	 					column = "STATE_NM" 			/>	
+		<result property = "simple_mode"	 				column = "SIMPLE_MODE" 			/>	
+	</resultMap>
+	<resultMap id="reservationDTOMap" 				class="ReservationDTO" 		extends="reservationMap">
+		<result property = "user.id" 						column = "{seq=USER_SEQ}" 		select="user.userIdStmt" />
+		<result property = "user.name" 						column = "{seq=USER_SEQ}" 		select="user.userNameStmt" />
+		<result property = "source_stp" 					column = "{seq=SOURCE_STP_SEQ}" select="adm.routerDTOSelect" />
+		<result property = "dest_stp" 						column = "{seq=DEST_STP_SEQ}" 	select="adm.routerDTOSelect" />
+
+		<result property = "sourceStpNetwork.network_nm"	column = "SOURCE_NETWORK_NM" 	/>	
+		<result property = "destStpNetwork.network_nm"	 	column = "DEST_NETWORK_NM" 		/>	
+		<result property = "sourceStpLocal.local_nm"		column = "SOURCE_LOCAL_NM" 		/>	
+		<result property = "destStpLocal.local_nm"			column = "DEST_LOCAL_NM"		/>	
+		<result property = "providerNsa.nsa_nm"	 			column = "PROVIDER_NM" 			/>	
+	</resultMap>
+	<resultMap id="reservationListMap" 				class="ReservationDTO" 		extends="reservationMap">
+		<result property = "user.id" 						column = "{seq=USER_SEQ}" 		select="user.userIdStmt" />
+		<result property = "user.name" 						column = "{seq=USER_SEQ}" 		select="user.userNameStmt" />
+		<!-- 
+		<result property = "source_stp" 					column = "{seq=SOURCE_STP_SEQ}" select="adm.routerDTOSelect" />
+		<result property = "dest_stp" 						column = "{seq=DEST_STP_SEQ}" 	select="adm.routerDTOSelect" /> 
+		-->
+		<result property = "sourceStpNetwork.network_nm"	column = "SOURCE_NETWORK_NM" 	/>	
+		<result property = "destStpNetwork.network_nm"	 	column = "DEST_NETWORK_NM" 		/>	
+	</resultMap>
+	<resultMap id="eroMap" 							class="Ero">
+		<result property = "reservation_seq"				column = "RESERVATION_SEQ" 		/>	
+		<result property = "network_id"	 					column = "NETWORK_ID" 			/>	
+		<result property = "local_id"	 					column = "LOCAL_ID" 			/>	
+		<result property = "ero_order"						column = "ERO_ORDER" 			/>	
+		<result property = "stpNetwork.network_nm"			column = "NETWORK_NM"			/>	
+		<result property = "stpLocal.local_nm"	 			column = "LOCAL_NM" 			/>	
+	</resultMap>
+	<resultMap id="notificationLogMap" 				class="NotificationLog">
+		<result property = "noti_seq"						column = "NOTI_SEQ" 			/>	
+		<result property = "connection_id"	 				column = "CONNECTION_ID" 		/>	
+		<result property = "notification_id"	 			column = "NOTIFICATION_ID" 		/>	
+		<result property = "occur_time"						column = "OCCUR_TIME" 			/>	
+		<result property = "noti_type"						column = "NOTI_TYPE"			/>	
+		<result property = "noti_type_desc"	 				column = "NOTI_TYPE_DESC" 		/>	
+	</resultMap>
+	<resultMap id="reservationFavMap" 				class="ReservationFav">
+		<result property = "seq"							column = "SEQ" 					/>	
+		<result property = "userSeq"	 					column = "USER_SEQ" 			/>	
+		<result property = "providerNsa.nsa_addr"	 		column = "PROVIDER_NSA_ADDR"	/>	
+		<result property = "providerNsa.nsa_nm"	 			column = "PROVIDER_NSA_NM" 		/>	
+		<result property = "sourceNetwork.network_id"		column = "SOURCE_NETWORK_ID" 	/>	
+		<result property = "sourceNetwork.network_nm"		column = "SOURCE_NETWORK_NM" 	/>	
+		<result property = "destNetwork.network_id"			column = "DEST_NETWORK_ID" 		/>	
+		<result property = "destNetwork.network_nm"			column = "DEST_NETWORK_NM" 		/>	
+		<result property = "sourceLocal.local_id"			column = "SOURCE_LOCAL_ID" 		/>	
+		<result property = "sourceLocal.local_nm"			column = "SOURCE_LOCAL_NM" 		/>
+		<result property = "destLocal.local_id"				column = "DEST_LOCAL_ID" 		/>	
+		<result property = "destLocal.local_nm"				column = "DEST_LOCAL_NM" 		/>	
+		<result property = "host_ip"	 					column = "HOST_IP" 				/>	
+		<result property = "dest_ip"	 					column = "DEST_IP" 				/>	
+		<result property = "nm"	 							column = "NM" 					/>	
+	</resultMap>
+	<!-- resultMap area end -->
+
+	<!-- sql area start -->
+	<select id="reservationStatusSelect" parameterClass="java.lang.String" resultMap="reservationDTOMap">
+	<![CDATA[	
+		SELECT 	
+				SEQ, 
+				CORRELATION_ID, 
+				HOST_IP, 
+				DEST_IP, 
+				REPLY_TO, 
+				REQUESTER_NSA, 
+				PROVIDER_NSA, 
+				GLOBAL_RESERVATION_ID, 
+				DESCRIPTION, 
+				CONNECTION_ID, 
+				START_TIME, 
+				END_TIME, 
+				DESIRED, 
+				MINIMUM, 
+				MAXIMUM, 
+				DIRECTIONALITY, 
+				SOURCE_STP_SEQ, 
+				DEST_STP_SEQ, 
+				USER_SEQ, 
+				STATUS, 
+				FLAG,
+				CREATETIME,
+				TYPE,
+				TROUBLE_YN,
+				SIMPLE_MODE
+		FROM 
+				RESERVATION
+		WHERE 
+				1=1
+				AND SEQ = #seq#
+	]]>
+	</select>
+	
+	<!-- <insert id="reservationInsert" parameterClass="ReservationDTO">
+	<![CDATA[
+		INSERT INTO RESERVATION 
+		(
+			CORRELATION_ID, 
+			HOST_IP, 
+			DEST_IP,
+			REPLY_TO, 
+			REQUESTER_NSA, 
+			PROVIDER_NSA, 
+			GLOBAL_RESERVATION_ID, 
+			CONNECTION_ID, 
+			START_TIME, 
+			END_TIME, 
+			DESIRED, 
+			MINIMUM, 
+			MAXIMUM, 
+			DIRECTIONALITY, 
+			SOURCE_STP_SEQ, 
+			DEST_STP_SEQ, 
+			USER_SEQ, 
+			STATUS,
+			FLAG, 
+			CREATETIME,
+			TYPE
+		)
+		VALUES
+		(
+			#correlation_id#, 
+			#host_ip#, 
+			#dest_ip#,
+			#reply_to#, 
+			#requester_nsa#, 
+			#provider_nsa#, 
+			#global_reservation_id#, 
+			#connection_id#, 
+			#start_time#, 
+			#end_time#, 
+			#desired#, 
+			#minimum#, 
+			#maximum#, 
+			#directionality#, 
+			#source_stp_seq#, 
+			#dest_stp_seq#, 
+			#user_seq#, 
+			#status#, 
+			#flag#,
+			NOW(),
+			#type#
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert> -->
+	<insert id="reservationInsert" parameterClass="ReservationDTO">
+	<![CDATA[
+		INSERT INTO RESERVATION 
+		(
+			CORRELATION_ID, 
+			HOST_IP, 
+			DEST_IP,
+			REPLY_TO, 
+			REQUESTER_NSA, 
+			PROVIDER_NSA, 
+			GLOBAL_RESERVATION_ID, 
+			CONNECTION_ID, 
+			START_TIME, 
+			END_TIME, 
+			DESIRED, 
+			MINIMUM, 
+			MAXIMUM, 
+			DIRECTIONALITY, 
+			SOURCE_STP_SEQ, 
+			DEST_STP_SEQ, 
+			USER_SEQ, 
+			STATUS,
+			FLAG, 
+			CREATETIME,
+			TYPE,
+			
+			SYMMETRIC_PATH,
+			MTU,
+			BURSTSIZE,
+			DESCRIPTION,
+			VERSION,
+			VERSION_COMMIT,
+			SOURCE_NETWORK_ID,
+			DEST_NETWORK_ID,
+			SOURCE_LOCAL_ID,
+			DEST_LOCAL_ID,
+			SOURCE_VLAN,
+			DEST_VLAN,
+			RESERVE_FIN,
+			RESERVE_STATE,
+			PROVISION_STATE,
+			LIFE_CYCLE,
+			DATA_PLANE,
+			STATE_NM,
+			SIMPLE_MODE			
+		)
+		VALUES
+		(
+			#correlation_id#, 
+			#host_ip#, 
+			#dest_ip#,
+			#reply_to#, 
+			#requester_nsa#, 
+			#provider_nsa#, 
+			#global_reservation_id#, 
+			#connection_id#, 
+			#start_time#, 
+			#end_time#, 
+			#desired#, 
+			#minimum#, 
+			#maximum#, 
+			#directionality#, 
+			#source_stp_seq#, 
+			#dest_stp_seq#, 
+			#user_seq#, 
+			#status#, 
+			#flag#,
+			NOW(),
+			#type#,
+			
+			#symmetricPath#,
+			#mtu#,
+			#burstsize#,
+			#description#,
+			#version#,
+			'Y',
+			#source_network_id#,
+			#dest_network_id#,
+			#source_local_id#,
+			#dest_local_id#,
+			#sourceVLAN#,
+			#destVLAN#,
+			#reserve_fin#,
+			#reserve_state#,
+			#provision_state#,
+			#life_cycle#,
+			#data_plane#,
+			#state_nm#,			
+			#simple_mode#			
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<insert id="reservationModInsert" parameterClass="ReservationDTO">
+	<![CDATA[
+		INSERT INTO RESERVATION 
+		(
+			CORRELATION_ID, 
+			HOST_IP, 
+			DEST_IP,
+			REPLY_TO, 
+			REQUESTER_NSA, 
+			PROVIDER_NSA, 
+			GLOBAL_RESERVATION_ID, 
+			CONNECTION_ID, 
+			START_TIME, 
+			END_TIME, 
+			DESIRED, 
+			MINIMUM, 
+			MAXIMUM, 
+			DIRECTIONALITY, 
+			SOURCE_STP_SEQ, 
+			DEST_STP_SEQ, 
+			USER_SEQ, 
+			STATUS,
+			FLAG, 
+			CREATETIME,
+			TYPE,
+			
+			SYMMETRIC_PATH,
+			MTU,
+			BURSTSIZE,
+			DESCRIPTION,
+			VERSION,
+			VERSION_COMMIT,
+			SOURCE_NETWORK_ID,
+			DEST_NETWORK_ID,
+			SOURCE_LOCAL_ID,
+			DEST_LOCAL_ID,
+			SOURCE_VLAN,
+			DEST_VLAN,
+			RESERVE_FIN,
+			RESERVE_STATE,
+			PROVISION_STATE,
+			LIFE_CYCLE,
+			DATA_PLANE,
+			STATE_NM,
+			SIMPLE_MODE			
+		)
+		select	#correlation_id#, 
+				HOST_IP, 
+				DEST_IP,
+				REPLY_TO, 
+				REQUESTER_NSA, 
+				PROVIDER_NSA, 
+				GLOBAL_RESERVATION_ID, 
+				CONNECTION_ID, 
+				#start_time#, 
+				#end_time#, 
+				#desired#, 
+				#minimum#, 
+				#maximum#, 
+				DIRECTIONALITY, 
+				SOURCE_STP_SEQ, 
+				DEST_STP_SEQ, 
+				USER_SEQ, 
+				STATUS,
+				FLAG, 
+				NOW(),
+				TYPE,
+				
+				SYMMETRIC_PATH,
+				MTU,
+				BURSTSIZE,
+				DESCRIPTION,
+				#version#,
+				'Y',
+				SOURCE_NETWORK_ID,
+				DEST_NETWORK_ID,
+				SOURCE_LOCAL_ID,
+				DEST_LOCAL_ID,
+				#sourceVLAN#,
+				#destVLAN#,
+				#reserve_fin#,
+				#reserve_state#,
+				#provision_state#,
+				#life_cycle#,
+				#data_plane#,
+				#state_nm#,
+				SIMPLE_MODE	
+		from	RESERVATION
+		where	seq = #seq#	
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<insert id="reservationEroInsert" parameterClass="Ero">
+	<![CDATA[
+		INSERT INTO ERO 
+		(
+			RESERVATION_SEQ,
+			NETWORK_ID,
+			LOCAL_ID,
+			ERO_ORDER	
+		)
+		VALUES
+		(
+			#reservation_seq#,			
+			#network_id#, 
+			#local_id#, 
+			#ero_order#
+		)
+	]]>
+	</insert>
+	<insert id="reservationModEroInsert" parameterClass="java.util.Map">
+	<![CDATA[
+		INSERT INTO ERO 
+		(
+			RESERVATION_SEQ,
+			NETWORK_ID,
+			LOCAL_ID,
+			ERO_ORDER	
+		)
+		select	#mod_reservation_seq#,	
+				NETWORK_ID,
+				LOCAL_ID,
+				ERO_ORDER
+		from	ERO
+		where	RESERVATION_SEQ = #old_reservation_seq#		
+	]]>
+	</insert>
+	<insert id="notificationLogInsert" parameterClass="NotificationLog">
+	<![CDATA[
+		INSERT INTO NOTIFICATION_LOG 
+		(
+			NOTI_SEQ,
+			CONNECTION_ID,
+			NOTIFICATION_ID,
+			OCCUR_TIME,
+			NOTI_TYPE,
+			NOTI_TYPE_DESC	
+		)
+		VALUES
+		(
+			#noti_seq#,			
+			#connection_id#, 
+			#notification_id#, 
+			#occur_time#, 
+			#noti_type#, 
+			#noti_type_desc#
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	
+	
+	
+	<update id="reservationStatusUpdate" parameterClass="ReservationDTO">
+	<![CDATA[
+		UPDATE RESERVATION SET BF_STATUS = STATUS, STATUS = #status#, FLAG = #flag# WHERE SEQ = #seq#
+	]]>
+	</update>
+	
+	
+	
+	
+	
+	<update id="reservationConnIdUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		CONNECTION_ID = #connectionId# 
+		WHERE	CORRELATION_ID = #correlationId#
+		AND		GLOBAL_RESERVATION_ID = #globalReservationId#
+	]]>
+	</update>
+	<update id="revStatUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		SEQ = SEQ
+	]]>
+		<isNotEmpty property="reserveState" prepend=", ">
+		<![CDATA[	RESERVE_STATE	= #reserveState#	]]>		
+		</isNotEmpty>
+		<isNotEmpty property="provisionState" prepend=", ">
+		<![CDATA[	PROVISION_STATE	= #provisionState#	]]>		
+		</isNotEmpty>
+		<isNotEmpty property="lifeCycle" prepend=", ">
+		<![CDATA[	LIFE_CYCLE		= #lifeCycle#		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="dataPlane" prepend=", ">
+		<![CDATA[	DATA_PLANE		= #dataPlane#		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="stateNm" prepend=", ">
+		<![CDATA[	STATE_NM		= #stateNm#			]]>		
+		</isNotEmpty>
+		<isNotEmpty property="reserveFin" prepend=", ">
+		<![CDATA[	RESERVE_FIN		= #reserveFin#		]]>		
+		</isNotEmpty>
+	<![CDATA[		
+		WHERE	VERSION_COMMIT	= 'Y'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="revStatNmUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		STATE_NM = #stateNm#
+		WHERE	VERSION_COMMIT	= 'Y'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="reservationStateUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		RESERVE_STATE	= #reserveState#,
+				PROVISION_STATE = #provisionState#,
+				LIFE_CYCLE		= #lifeCycle#,
+				DATA_PLANE		= #dataPlane#
+		WHERE	VERSION_COMMIT	= 'Y'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="provisionStateUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		PROVISION_STATE = #provisionState#
+		WHERE	VERSION_COMMIT	= 'Y'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="terminateStateUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		PROVISION_STATE = 'Released',
+				LIFE_CYCLE		= 'Terminated',
+				DATA_PLANE		= 'Inactive',
+				state_nm		= 'TerminateConfirmed'
+		WHERE	VERSION_COMMIT	= 'Y'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="reserveStateUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		RESERVE_STATE	= #reserveState#
+		WHERE	VERSION_COMMIT	= 'Y'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="lifeCycleUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		LIFE_CYCLE		= #lifeCycle#
+		WHERE	VERSION_COMMIT	= 'Y'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="dataPlaneUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		DATA_PLANE = #dataPlane#
+	]]>
+		<isNotEmpty property="state_nm" prepend=", ">
+		<![CDATA[	STATE_NM	= #state_nm#	]]>		
+		</isNotEmpty>
+	<![CDATA[
+		WHERE	VERSION			= #version#
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="reservationStateFinUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		RESERVE_FIN		= 'Y',
+				RESERVE_STATE	= #reserveState#,
+				PROVISION_STATE = #provisionState#,
+				LIFE_CYCLE		= #lifeCycle#,
+				DATA_PLANE		= #dataPlane#
+		WHERE	VERSION_COMMIT	= 'Y'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="prvVersionTerminateUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		PROVISION_STATE = 'Released',
+				LIFE_CYCLE		= 'Terminated',
+				DATA_PLANE		= 'Inactive'
+		WHERE	VERSION_COMMIT	= 'N'
+		AND		CONNECTION_ID	= #connectionId#
+	]]>
+	</update>
+	<update id="reservationVersionCommitUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		VERSION_COMMIT	= #version_commit#
+		WHERE	SEQ = #chg_version_commit_reserve_seq#
+	]]>
+	</update>
+	
+	<update id="vlanUpdate" parameterClass="java.util.Map">
+	<![CDATA[
+		UPDATE	RESERVATION 
+		SET		SOURCE_VLAN = #sourceVLAN#, DEST_VLAN = #destinationVLAN#
+		WHERE	VERSION_COMMIT	= 'Y'	
+		AND		CONNECTION_ID	= #connectionId#	
+	]]>
+	</update>
+	
+	
+	
+	<update id="reservationAckStatusUpdate" parameterClass="ReservationDTO">
+	<![CDATA[
+		UPDATE RESERVATION SET STATUS = #status#, FLAG = #flag# WHERE CORRELATION_ID = #correlation_id#
+	]]>
+	</update>
+	<update id="reservationFailUpdate">
+	<![CDATA[
+		UPDATE 
+				RESERVATION 
+		SET 
+				STATUS = BF_STATUS, 
+				FLAG = 'C' 
+		WHERE 
+				FLAG = 'F'
+				AND STATUS IN ('P', 'R', 'T') 
+	]]>
+	</update>
+	<delete id="reservationFailDelete">
+	<![CDATA[
+		DELETE FROM 
+				RESERVATION 
+		WHERE 
+				FLAG = 'F'
+				AND STATUS = 'C' 
+	]]>
+	</delete>
+	<select id="srchReservationAllCnt" parameterClass="SrchReserveParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT
+				COUNT(SEQ) AS CNT
+		FROM
+				RESERVATION
+		WHERE
+				1=1
+				AND !(STATUS = 'T' AND FLAG = 'C')
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+				USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	</select>
+	<select id="srchReservationAllList" parameterClass="SrchReserveParam" resultMap="reservationDTOMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, 
+				C.CORRELATION_ID, 
+				C.HOST_IP, 
+				C.DEST_IP,
+				C.REPLY_TO, 
+				C.REQUESTER_NSA, 
+				C.PROVIDER_NSA, 
+				C.GLOBAL_RESERVATION_ID, 
+				C.DESCRIPTION, 
+				C.CONNECTION_ID, 
+				C.START_TIME, 
+				C.END_TIME, 
+				C.DESIRED, 
+				C.MINIMUM, 
+				C.MAXIMUM, 
+				C.DIRECTIONALITY, 
+				C.SOURCE_STP_SEQ, 
+				C.DEST_STP_SEQ, 
+				C.USER_SEQ, 
+				C.STATUS, 
+				C.FLAG,
+				C.CREATETIME,
+				C.TYPE,
+				C.TROUBLE_YN,
+				C.SIMPLE_MODE
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT 	
+								SEQ, 
+								CORRELATION_ID, 
+								HOST_IP, 
+								DEST_IP,
+								REPLY_TO, 
+								REQUESTER_NSA, 
+								PROVIDER_NSA, 
+								GLOBAL_RESERVATION_ID, 
+								DESCRIPTION, 
+								CONNECTION_ID, 
+								START_TIME, 
+								END_TIME, 
+								DESIRED, 
+								MINIMUM, 
+								MAXIMUM, 
+								DIRECTIONALITY, 
+								SOURCE_STP_SEQ, 
+								DEST_STP_SEQ, 
+								USER_SEQ, 
+								STATUS,
+								FLAG, 
+								CREATETIME,
+								TYPE,
+								TROUBLE_YN,
+								SIMPLE_MODE
+						FROM 
+								RESERVATION
+						WHERE 
+								1=1
+								AND !(STATUS = 'T' AND FLAG = 'C')
+								AND SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+								USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY $sortKey$ $sortType$) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				C.SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select>
+	<!-- <select id="srchReservationCnt" parameterClass="SrchReserveParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT
+				COUNT(SEQ) AS CNT
+		FROM
+				RESERVATION
+		WHERE
+				1=1
+				AND !(STATUS = 'T' AND FLAG = 'C')
+				AND !(STATUS = 'C' AND FLAG = 'F')
+				AND !(STATUS = 'C' AND FLAG = 'R')
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+				USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	</select> -->
+	<select id="srchReservationCnt" parameterClass="SrchReserveParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT	COUNT(SEQ) AS CNT
+		FROM	RESERVATION
+		WHERE	!(LIFE_CYCLE = 'Terminated')
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+				USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	</select>
+	<select id="srchReservationCntAll" parameterClass="SrchReserveParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT	COUNT(SEQ) AS CNT
+		FROM	RESERVATION
+		WHERE	1=1
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[				USER_SEQ = #user_seq#										]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createBegin" prepend="AND">
+		<![CDATA[				CONVERT(START_TIME, DATE) >= CONVERT(#createBegin#, DATE)	]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createEnd" prepend="AND">
+		<![CDATA[				CONVERT(END_TIME, DATE) <= CONVERT(#createEnd#, DATE)		]]>		
+		</isNotEmpty>
+	</select>
+	<select id="srchReservationList" parameterClass="SrchReserveParam" resultMap="reservationDTOMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, 
+				C.CORRELATION_ID, 
+				C.HOST_IP, 
+				C.DEST_IP,
+				C.REPLY_TO, 
+				C.REQUESTER_NSA, 
+				C.PROVIDER_NSA, 
+				C.GLOBAL_RESERVATION_ID, 
+				C.DESCRIPTION, 
+				C.CONNECTION_ID, 
+				C.START_TIME, 
+				C.END_TIME, 
+				C.DESIRED, 
+				C.MINIMUM, 
+				C.MAXIMUM, 
+				C.DIRECTIONALITY, 
+				C.SOURCE_STP_SEQ, 
+				C.DEST_STP_SEQ, 
+				C.USER_SEQ, 
+				C.STATUS, 
+				C.FLAG,
+				C.CREATETIME,
+				C.TYPE,
+				C.TROUBLE_YN,
+				C.SIMPLE_MODE
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT 	
+								SEQ, 
+								CORRELATION_ID, 
+								HOST_IP, 
+								DEST_IP,
+								REPLY_TO, 
+								REQUESTER_NSA, 
+								PROVIDER_NSA, 
+								GLOBAL_RESERVATION_ID, 
+								DESCRIPTION, 
+								CONNECTION_ID, 
+								START_TIME, 
+								END_TIME, 
+								DESIRED, 
+								MINIMUM, 
+								MAXIMUM, 
+								DIRECTIONALITY, 
+								SOURCE_STP_SEQ, 
+								DEST_STP_SEQ, 
+								USER_SEQ, 
+								STATUS,
+								FLAG, 
+								CREATETIME,
+								TYPE,
+								TROUBLE_YN,
+								SIMPLE_MODE
+						FROM 
+								RESERVATION
+						WHERE 
+								1=1
+								AND !(STATUS = 'T' AND FLAG = 'C')
+								AND !(STATUS = 'C' AND FLAG = 'F')
+								AND !(STATUS = 'C' AND FLAG = 'R')
+								AND SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+								USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY $sortKey$ $sortType$) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				C.SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select>
+	
+	<select id="reservationList" parameterClass="java.util.Map" resultMap="reservationListMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, 
+				C.CORRELATION_ID, 
+				C.HOST_IP, 
+				C.DEST_IP,
+				C.REPLY_TO, 
+				C.REQUESTER_NSA, 
+				C.PROVIDER_NSA, 
+				C.GLOBAL_RESERVATION_ID, 
+				C.DESCRIPTION, 
+				C.CONNECTION_ID, 
+				C.START_TIME, 
+				C.END_TIME, 
+				C.DESIRED, 
+				C.MINIMUM, 
+				C.MAXIMUM, 
+				C.DIRECTIONALITY, 
+				C.SOURCE_STP_SEQ, 
+				C.DEST_STP_SEQ, 
+				C.USER_SEQ, 
+				C.STATUS, 
+				C.FLAG,
+				C.CREATETIME,
+				C.TYPE,
+				C.TROUBLE_YN,
+				
+				C.SYMMETRIC_PATH,
+				C.SOURCE_VLAN,
+				C.DEST_VLAN,
+				C.VERSION,
+				C.VERSION_COMMIT,
+				C.MTU,
+				C.BURSTSIZE,
+				C.SOURCE_LOCAL_ID,
+				C.DEST_LOCAL_ID,
+				C.RESERVE_FIN,
+				C.RESERVE_STATE,
+				C.PROVISION_STATE,
+				C.LIFE_CYCLE,
+				C.DATA_PLANE,
+				C.SOURCE_NETWORK_ID,
+				C.DEST_NETWORK_ID,
+				C.SOURCE_NETWORK_NM,
+                C.DEST_NETWORK_NM,
+                C.STATE_NM,
+                C.SIMPLE_MODE	
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT 	
+								SEQ, 
+								CORRELATION_ID, 
+								HOST_IP, 
+								DEST_IP,
+								REPLY_TO, 
+								REQUESTER_NSA, 
+								PROVIDER_NSA, 
+								GLOBAL_RESERVATION_ID, 
+								DESCRIPTION, 
+								CONNECTION_ID, 
+								START_TIME, 
+								END_TIME, 
+								DESIRED, 
+								MINIMUM, 
+								MAXIMUM, 
+								DIRECTIONALITY, 
+								SOURCE_STP_SEQ, 
+								DEST_STP_SEQ, 
+								USER_SEQ, 
+								STATUS,
+								FLAG, 
+								CREATETIME,
+								TYPE,
+								TROUBLE_YN,
+								
+								SYMMETRIC_PATH,
+								SOURCE_VLAN,
+								DEST_VLAN,
+								VERSION,
+								VERSION_COMMIT,
+								MTU,
+								BURSTSIZE,
+								SOURCE_LOCAL_ID,
+								DEST_LOCAL_ID,
+								RESERVE_FIN,
+								RESERVE_STATE,
+								PROVISION_STATE,
+								LIFE_CYCLE,
+								DATA_PLANE,
+								SOURCE_NETWORK_ID,
+								DEST_NETWORK_ID,
+								STATE_NM,
+								SIMPLE_MODE,
+                                SNS.NETWORK_NM AS SOURCE_NETWORK_NM,
+                                SND.NETWORK_NM AS DEST_NETWORK_NM                           								
+						FROM 
+								RESERVATION R LEFT OUTER JOIN STP_NETWORK SNS ON R.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                                			  LEFT OUTER JOIN STP_NETWORK SND ON R.DEST_NETWORK_ID=SND.NETWORK_ID
+						WHERE 
+								1=1
+								AND !(LIFE_CYCLE = 'Terminated')
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+								USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY CREATETIME DESC) A,
+						(SELECT @RNUM:=0) B
+				) C
+		
+	]]>			
+	</select>
+	
+	<select id="reservationListAll" parameterClass="SrchReserveParam" resultMap="reservationListMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, 
+				C.CORRELATION_ID, 
+				C.HOST_IP, 
+				C.DEST_IP,
+				C.REPLY_TO, 
+				C.REQUESTER_NSA, 
+				C.PROVIDER_NSA, 
+				C.GLOBAL_RESERVATION_ID, 
+				C.DESCRIPTION, 
+				C.CONNECTION_ID, 
+				C.START_TIME, 
+				C.END_TIME, 
+				C.DESIRED, 
+				C.MINIMUM, 
+				C.MAXIMUM, 
+				C.DIRECTIONALITY, 
+				C.SOURCE_STP_SEQ, 
+				C.DEST_STP_SEQ, 
+				C.USER_SEQ, 
+				C.STATUS, 
+				C.FLAG,
+				C.CREATETIME,
+				C.TYPE,
+				C.TROUBLE_YN,
+				
+				C.SYMMETRIC_PATH,
+				C.SOURCE_VLAN,
+				C.DEST_VLAN,
+				C.VERSION,
+				C.VERSION_COMMIT,
+				C.MTU,
+				C.BURSTSIZE,
+				C.SOURCE_LOCAL_ID,
+				C.DEST_LOCAL_ID,
+				C.RESERVE_FIN,
+				C.RESERVE_STATE,
+				C.PROVISION_STATE,
+				C.LIFE_CYCLE,
+				C.DATA_PLANE,
+				C.SOURCE_NETWORK_ID,
+				C.DEST_NETWORK_ID,
+				C.SOURCE_NETWORK_NM,
+                C.DEST_NETWORK_NM,
+                C.STATE_NM,
+                C.SIMPLE_MODE	
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT 	
+								SEQ, 
+								CORRELATION_ID, 
+								HOST_IP, 
+								DEST_IP,
+								REPLY_TO, 
+								REQUESTER_NSA, 
+								PROVIDER_NSA, 
+								GLOBAL_RESERVATION_ID, 
+								DESCRIPTION, 
+								CONNECTION_ID, 
+								START_TIME, 
+								END_TIME, 
+								DESIRED, 
+								MINIMUM, 
+								MAXIMUM, 
+								DIRECTIONALITY, 
+								SOURCE_STP_SEQ, 
+								DEST_STP_SEQ, 
+								USER_SEQ, 
+								STATUS,
+								FLAG, 
+								CREATETIME,
+								TYPE,
+								TROUBLE_YN,
+								
+								SYMMETRIC_PATH,
+								SOURCE_VLAN,
+								DEST_VLAN,
+								VERSION,
+								VERSION_COMMIT,
+								MTU,
+								BURSTSIZE,
+								SOURCE_LOCAL_ID,
+								DEST_LOCAL_ID,
+								RESERVE_FIN,
+								RESERVE_STATE,
+								PROVISION_STATE,
+								LIFE_CYCLE,
+								DATA_PLANE,
+								SOURCE_NETWORK_ID,
+								DEST_NETWORK_ID,
+								STATE_NM,
+								SIMPLE_MODE,
+                                SNS.NETWORK_NM AS SOURCE_NETWORK_NM,
+                                SND.NETWORK_NM AS DEST_NETWORK_NM                           								
+						FROM 
+								RESERVATION R LEFT OUTER JOIN STP_NETWORK SNS ON R.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                                			  LEFT OUTER JOIN STP_NETWORK SND ON R.DEST_NETWORK_ID=SND.NETWORK_ID
+						WHERE 
+								1=1
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[				USER_SEQ = #user_seq#										]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createBegin" prepend="AND">
+		<![CDATA[				CONVERT(START_TIME, DATE) >= CONVERT(#createBegin#, DATE)	]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createEnd" prepend="AND">
+		<![CDATA[				CONVERT(END_TIME, DATE) <= CONVERT(#createEnd#, DATE)		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY CREATETIME DESC) A,
+						(SELECT @RNUM:=0) B
+				) C
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select>
+	
+	<!-- <select id="reservationSelect" parameterClass="ReservationDTO" resultMap="reservationDTOMap">
+	<![CDATA[	
+		SELECT 	
+				SEQ, 
+				CORRELATION_ID, 
+				HOST_IP, 
+				DEST_IP,
+				REPLY_TO, 
+				REQUESTER_NSA, 
+				PROVIDER_NSA, 
+				GLOBAL_RESERVATION_ID, 
+				DESCRIPTION, 
+				CONNECTION_ID, 
+				START_TIME, 
+				END_TIME, 
+				DESIRED, 
+				MINIMUM, 
+				MAXIMUM, 
+				DIRECTIONALITY, 
+				SOURCE_STP_SEQ, 
+				DEST_STP_SEQ, 
+				USER_SEQ, 
+				STATUS, 
+				FLAG,
+				CREATETIME,
+				TYPE,
+				TROUBLE_YN
+		FROM 
+				RESERVATION
+		WHERE 
+				1=1
+				AND !(STATUS = 'T' AND FLAG = 'C')
+				AND !(STATUS = 'C' AND FLAG = 'F')
+	]]>		
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+				USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+				AND SEQ = #seq#
+	]]>
+	</select> -->
+	<select id="reservationSelect" parameterClass="ReservationDTO" resultMap="reservationDTOMap">
+	<![CDATA[	
+		SELECT 	
+				SEQ, 
+				CORRELATION_ID, 
+				HOST_IP, 
+				DEST_IP,
+				REPLY_TO, 
+				REQUESTER_NSA, 
+				PROVIDER_NSA, 
+				GLOBAL_RESERVATION_ID, 
+				DESCRIPTION, 
+				CONNECTION_ID, 
+				START_TIME, 
+				END_TIME, 
+				DESIRED, 
+				MINIMUM, 
+				MAXIMUM, 
+				DIRECTIONALITY, 
+				SOURCE_STP_SEQ, 
+				DEST_STP_SEQ, 
+				USER_SEQ, 
+				STATUS, 
+				FLAG,
+				CREATETIME,
+				TYPE,
+				TROUBLE_YN,
+				
+				SYMMETRIC_PATH,
+				SOURCE_VLAN,
+				DEST_VLAN,
+				VERSION,
+				VERSION_COMMIT,
+				MTU,
+				BURSTSIZE,
+				SOURCE_LOCAL_ID,
+				DEST_LOCAL_ID,
+				RESERVE_FIN,
+				RESERVE_STATE,
+				PROVISION_STATE,
+				LIFE_CYCLE,
+				DATA_PLANE,
+				SOURCE_NETWORK_ID,
+				DEST_NETWORK_ID,
+				STATE_NM,
+				SIMPLE_MODE,
+                SNS.NETWORK_NM AS SOURCE_NETWORK_NM,
+                SND.NETWORK_NM AS DEST_NETWORK_NM,
+                SLS.LOCAL_NM AS SOURCE_LOCAL_NM,								
+                SLD.LOCAL_NM AS DEST_LOCAL_NM,
+                PN.NSA_NM AS PROVIDER_NM
+		FROM	RESERVATION R LEFT OUTER JOIN STP_NETWORK SNS ON R.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                              LEFT OUTER JOIN STP_NETWORK SND ON R.DEST_NETWORK_ID=SND.NETWORK_ID
+                              LEFT OUTER JOIN STP_LOCAL SLS ON R.SOURCE_NETWORK_ID=SLS.NETWORK_ID AND R.SOURCE_LOCAL_ID=SLS.LOCAL_ID
+                              LEFT OUTER JOIN STP_LOCAL SLD ON R.DEST_NETWORK_ID=SLD.NETWORK_ID AND R.DEST_LOCAL_ID=SLD.LOCAL_ID
+                              LEFT OUTER JOIN PROVIDER_NSA PN ON R.PROVIDER_NSA=PN.NSA_ADDR
+		WHERE	!(LIFE_CYCLE = 'Terminated')
+	]]>		
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+				USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+				AND SEQ = #seq#
+	]]>
+	</select>
+	
+	<!-- <select id="reservationSelectAdm" parameterClass="ReservationDTO" resultMap="reservationDTOMap">
+	<![CDATA[	
+		SELECT 	
+				SEQ, 
+				CORRELATION_ID, 
+				HOST_IP, 
+				DEST_IP,
+				REPLY_TO, 
+				REQUESTER_NSA, 
+				PROVIDER_NSA, 
+				GLOBAL_RESERVATION_ID, 
+				DESCRIPTION, 
+				CONNECTION_ID, 
+				START_TIME, 
+				END_TIME, 
+				DESIRED, 
+				MINIMUM, 
+				MAXIMUM, 
+				DIRECTIONALITY, 
+				SOURCE_STP_SEQ, 
+				DEST_STP_SEQ, 
+				USER_SEQ, 
+				STATUS, 
+				FLAG,
+				CREATETIME,
+				TYPE,
+				TROUBLE_YN,
+				
+				SYMMETRIC_PATH,
+				SOURCE_VLAN,
+				DEST_VLAN,
+				VERSION,
+				VERSION_COMMIT,
+				MTU,
+				BURSTSIZE,
+				SOURCE_LOCAL_ID,
+				DEST_LOCAL_ID,
+				RESERVE_FIN,
+				RESERVE_STATE,
+				PROVISION_STATE,
+				LIFE_CYCLE,
+				DATA_PLANE,
+				SOURCE_NETWORK_ID,
+				DEST_NETWORK_ID,
+				STATE_NM,
+                SNS.NETWORK_NM AS SOURCE_NETWORK_NM,
+                SND.NETWORK_NM AS DEST_NETWORK_NM,
+                SLS.LOCAL_NM AS SOURCE_LOCAL_NM,								
+                SLD.LOCAL_NM AS DEST_LOCAL_NM,
+                PN.NSA_NM AS PROVIDER_NM
+		FROM	RESERVATION R LEFT OUTER JOIN STP_NETWORK SNS ON R.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                              LEFT OUTER JOIN STP_NETWORK SND ON R.DEST_NETWORK_ID=SND.NETWORK_ID
+                              LEFT OUTER JOIN STP_LOCAL SLS ON R.SOURCE_NETWORK_ID=SLS.NETWORK_ID AND R.SOURCE_LOCAL_ID=SLS.LOCAL_ID
+                              LEFT OUTER JOIN STP_LOCAL SLD ON R.DEST_NETWORK_ID=SLD.NETWORK_ID AND R.DEST_LOCAL_ID=SLD.LOCAL_ID
+                              LEFT OUTER JOIN PROVIDER_NSA PN ON R.PROVIDER_NSA=PN.NSA_ADDR
+		WHERE	SEQ = #seq#
+	]]>		
+	</select> -->
+	
+	<select id="reservationSelectOtr" parameterClass="ReservationDTO" resultMap="reservationDTOMap">
+	<![CDATA[	
+		SELECT 	
+				SEQ, 
+				CORRELATION_ID, 
+				HOST_IP, 
+				DEST_IP,
+				REPLY_TO, 
+				REQUESTER_NSA, 
+				PROVIDER_NSA, 
+				GLOBAL_RESERVATION_ID, 
+				DESCRIPTION, 
+				CONNECTION_ID, 
+				START_TIME, 
+				END_TIME, 
+				DESIRED, 
+				MINIMUM, 
+				MAXIMUM, 
+				DIRECTIONALITY, 
+				SOURCE_STP_SEQ, 
+				DEST_STP_SEQ, 
+				USER_SEQ, 
+				STATUS, 
+				FLAG,
+				CREATETIME,
+				TYPE,
+				TROUBLE_YN,
+				
+				SYMMETRIC_PATH,
+				SOURCE_VLAN,
+				DEST_VLAN,
+				VERSION,
+				VERSION_COMMIT,
+				MTU,
+				BURSTSIZE,
+				SOURCE_LOCAL_ID,
+				DEST_LOCAL_ID,
+				RESERVE_FIN,
+				RESERVE_STATE,
+				PROVISION_STATE,
+				LIFE_CYCLE,
+				DATA_PLANE,
+				SOURCE_NETWORK_ID,
+				DEST_NETWORK_ID,
+				STATE_NM,
+				SIMPLE_MODE,
+                SNS.NETWORK_NM AS SOURCE_NETWORK_NM,
+                SND.NETWORK_NM AS DEST_NETWORK_NM,
+                SLS.LOCAL_NM AS SOURCE_LOCAL_NM,								
+                SLD.LOCAL_NM AS DEST_LOCAL_NM,
+                PN.NSA_NM AS PROVIDER_NM
+		FROM	RESERVATION R LEFT OUTER JOIN STP_NETWORK SNS ON R.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                              LEFT OUTER JOIN STP_NETWORK SND ON R.DEST_NETWORK_ID=SND.NETWORK_ID
+                              LEFT OUTER JOIN STP_LOCAL SLS ON R.SOURCE_NETWORK_ID=SLS.NETWORK_ID AND R.SOURCE_LOCAL_ID=SLS.LOCAL_ID
+                              LEFT OUTER JOIN STP_LOCAL SLD ON R.DEST_NETWORK_ID=SLD.NETWORK_ID AND R.DEST_LOCAL_ID=SLD.LOCAL_ID
+                              LEFT OUTER JOIN PROVIDER_NSA PN ON R.PROVIDER_NSA=PN.NSA_ADDR
+		WHERE	SEQ = #seq#
+	]]>		
+	</select>
+	
+	<select id="reservationSelectAll" parameterClass="ReservationDTO" resultMap="reservationDTOMap">
+	<![CDATA[	
+		SELECT 	
+				SEQ, 
+				CORRELATION_ID, 
+				HOST_IP, 
+				DEST_IP,
+				REPLY_TO, 
+				REQUESTER_NSA, 
+				PROVIDER_NSA, 
+				GLOBAL_RESERVATION_ID, 
+				DESCRIPTION, 
+				CONNECTION_ID, 
+				START_TIME, 
+				END_TIME, 
+				DESIRED, 
+				MINIMUM, 
+				MAXIMUM, 
+				DIRECTIONALITY, 
+				SOURCE_STP_SEQ, 
+				DEST_STP_SEQ, 
+				USER_SEQ, 
+				STATUS, 
+				FLAG,
+				CREATETIME,
+				TYPE,
+				TROUBLE_YN,
+				
+				SYMMETRIC_PATH,
+				SOURCE_VLAN,
+				DEST_VLAN,
+				VERSION,
+				VERSION_COMMIT,
+				MTU,
+				BURSTSIZE,
+				SOURCE_LOCAL_ID,
+				DEST_LOCAL_ID,
+				RESERVE_FIN,
+				RESERVE_STATE,
+				PROVISION_STATE,
+				LIFE_CYCLE,
+				DATA_PLANE,
+				SOURCE_NETWORK_ID,
+				DEST_NETWORK_ID,
+				STATE_NM,
+				SIMPLE_MODE,
+                SNS.NETWORK_NM AS SOURCE_NETWORK_NM,
+                SND.NETWORK_NM AS DEST_NETWORK_NM,
+                SLS.LOCAL_NM AS SOURCE_LOCAL_NM,								
+                SLD.LOCAL_NM AS DEST_LOCAL_NM,
+                PN.NSA_NM AS PROVIDER_NM
+		FROM	RESERVATION R LEFT OUTER JOIN STP_NETWORK SNS ON R.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                              LEFT OUTER JOIN STP_NETWORK SND ON R.DEST_NETWORK_ID=SND.NETWORK_ID
+                              LEFT OUTER JOIN STP_LOCAL SLS ON R.SOURCE_NETWORK_ID=SLS.NETWORK_ID AND R.SOURCE_LOCAL_ID=SLS.LOCAL_ID
+                              LEFT OUTER JOIN STP_LOCAL SLD ON R.DEST_NETWORK_ID=SLD.NETWORK_ID AND R.DEST_LOCAL_ID=SLD.LOCAL_ID
+                              LEFT OUTER JOIN PROVIDER_NSA PN ON R.PROVIDER_NSA=PN.NSA_ADDR
+		WHERE	1=1
+	]]>		
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+				USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+				AND SEQ = #seq#
+	]]>
+	</select>
+	
+	<select id="EroSelect" parameterClass="ReservationDTO" resultMap="eroMap">
+	<![CDATA[	
+		SELECT 	
+				E.RESERVATION_SEQ, 
+				E.NETWORK_ID, 
+				E.LOCAL_ID, 
+				E.ERO_ORDER,
+				SN.NETWORK_NM,
+				SL.LOCAL_NM
+		FROM	ERO E LEFT OUTER JOIN STP_NETWORK SN ON E.NETWORK_ID=SN.NETWORK_ID
+                      LEFT OUTER JOIN STP_LOCAL SL ON E.NETWORK_ID=SL.NETWORK_ID AND E.LOCAL_ID=SL.LOCAL_ID
+		WHERE	1=1
+	]]>		
+	<![CDATA[	
+				AND RESERVATION_SEQ = #seq#
+	]]>
+		order by	E.ERO_ORDER ASC
+	</select>
+	
+	<select id="NotificationSelect" parameterClass="java.util.Map" resultMap="notificationLogMap">
+	<![CDATA[	
+		SELECT 	
+				NOTI_SEQ, 
+				CONNECTION_ID, 
+				NOTIFICATION_ID, 
+				OCCUR_TIME,
+				NOTI_TYPE,
+				NOTI_TYPE_DESC
+		FROM	NOTIFICATION_LOG
+		WHERE	CONNECTION_ID	= #connectionId#
+	]]>		
+	<isNotEmpty property="start_notificationId" prepend="AND">
+	<![CDATA[	AND NOTIFICATION_ID >= #start_notificationId#	]]>
+	</isNotEmpty>
+	<isNotEmpty property="end_notificationId" prepend="AND">
+	<![CDATA[	AND NOTIFICATION_ID <= #end_notificationId#		]]>
+	</isNotEmpty>
+	</select>
+	
+	<!-- <update id="reservationTerminate">
+	<![CDATA[	
+		UPDATE RESERVATION 
+		SET	
+				STATUS		= 'T',
+				FLAG		= 'C'
+		WHERE 
+				END_TIME < NOW()
+	]]>
+	</update> -->
+	<update id="reservationTerminate">
+	<![CDATA[	
+		UPDATE	RESERVATION 
+		SET		LIFE_CYCLE='Terminated'
+		WHERE	END_TIME < NOW()
+	]]>
+	</update>
+	
+	<select id="srchUserMonitorGroupCnt" parameterClass="SrchUserMonitorParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT
+				COUNT(SEQ) AS CNT
+		FROM
+				RESERVATION
+		WHERE
+				1=1
+				AND VERSION_COMMIT = 'Y'
+				AND USER_SEQ = #user_seq#
+	]]>
+	</select>
+	<!-- <select id="srchUserMonitorGroup" parameterClass="SrchUserMonitorParam" resultMap="reservationDTOMap">
+	<![CDATA[
+		SELECT 	
+				SEQ, 
+				CORRELATION_ID, 
+				HOST_IP, 
+				DEST_IP,
+				REPLY_TO, 
+				REQUESTER_NSA, 
+				PROVIDER_NSA, 
+				GLOBAL_RESERVATION_ID, 
+				DESCRIPTION, 
+				CONNECTION_ID, 
+				START_TIME, 
+				END_TIME, 
+				DESIRED, 
+				MINIMUM, 
+				MAXIMUM, 
+				DIRECTIONALITY, 
+				SOURCE_STP_SEQ, 
+				DEST_STP_SEQ, 
+				USER_SEQ, 
+				STATUS,
+				FLAG, 
+				CREATETIME,
+				TYPE,
+				TROUBLE_YN
+		FROM 
+				RESERVATION
+		WHERE 
+				1=1
+				AND !(STATUS = 'T' AND FLAG = 'C')
+				AND !(STATUS = 'C' AND FLAG = 'F')
+				AND !(STATUS = 'C' AND FLAG = 'R')
+				AND USER_SEQ = #user_seq#
+		ORDER BY $subSortKey$ $subSortType$
+	]]>
+	</select> -->
+	<select id="srchUserMonitorGroup" parameterClass="SrchUserMonitorParam" resultMap="reservationListMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, 
+				C.CORRELATION_ID, 
+				C.HOST_IP, 
+				C.DEST_IP,
+				C.REPLY_TO, 
+				C.REQUESTER_NSA, 
+				C.PROVIDER_NSA, 
+				C.GLOBAL_RESERVATION_ID, 
+				C.DESCRIPTION, 
+				C.CONNECTION_ID, 
+				C.START_TIME, 
+				C.END_TIME, 
+				C.DESIRED, 
+				C.MINIMUM, 
+				C.MAXIMUM, 
+				C.DIRECTIONALITY, 
+				C.SOURCE_STP_SEQ, 
+				C.DEST_STP_SEQ, 
+				C.USER_SEQ, 
+				C.STATUS, 
+				C.FLAG,
+				C.CREATETIME,
+				C.TYPE,
+				C.TROUBLE_YN,
+				
+				C.SYMMETRIC_PATH,
+				C.SOURCE_VLAN,
+				C.DEST_VLAN,
+				C.VERSION,
+				C.VERSION_COMMIT,
+				C.MTU,
+				C.BURSTSIZE,
+				C.SOURCE_LOCAL_ID,
+				C.DEST_LOCAL_ID,
+				C.RESERVE_FIN,
+				C.RESERVE_STATE,
+				C.PROVISION_STATE,
+				C.LIFE_CYCLE,
+				C.DATA_PLANE,
+				C.SOURCE_NETWORK_ID,
+				C.DEST_NETWORK_ID,
+				C.SOURCE_NETWORK_NM,
+                C.DEST_NETWORK_NM,
+                C.STATE_NM,
+                C.SIMPLE_MODE	
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT 	
+								SEQ, 
+								CORRELATION_ID, 
+								HOST_IP, 
+								DEST_IP,
+								REPLY_TO, 
+								REQUESTER_NSA, 
+								PROVIDER_NSA, 
+								GLOBAL_RESERVATION_ID, 
+								DESCRIPTION, 
+								CONNECTION_ID, 
+								START_TIME, 
+								END_TIME, 
+								DESIRED, 
+								MINIMUM, 
+								MAXIMUM, 
+								DIRECTIONALITY, 
+								SOURCE_STP_SEQ, 
+								DEST_STP_SEQ, 
+								USER_SEQ, 
+								STATUS,
+								FLAG, 
+								CREATETIME,
+								TYPE,
+								TROUBLE_YN,
+								
+								SYMMETRIC_PATH,
+								SOURCE_VLAN,
+								DEST_VLAN,
+								VERSION,
+								VERSION_COMMIT,
+								MTU,
+								BURSTSIZE,
+								SOURCE_LOCAL_ID,
+								DEST_LOCAL_ID,
+								RESERVE_FIN,
+								RESERVE_STATE,
+								PROVISION_STATE,
+								LIFE_CYCLE,
+								DATA_PLANE,
+								SOURCE_NETWORK_ID,
+								DEST_NETWORK_ID,
+								STATE_NM,
+								SIMPLE_MODE,
+                                SNS.NETWORK_NM AS SOURCE_NETWORK_NM,
+                                SND.NETWORK_NM AS DEST_NETWORK_NM                           								
+						FROM 
+								RESERVATION R LEFT OUTER JOIN STP_NETWORK SNS ON R.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                                			  LEFT OUTER JOIN STP_NETWORK SND ON R.DEST_NETWORK_ID=SND.NETWORK_ID
+						WHERE 
+								1=1
+								AND VERSION_COMMIT = 'Y'
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+								USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY CREATETIME DESC) A,
+						(SELECT @RNUM:=0) B
+				) C
+		LIMIT #sIdx#, #row#
+	]]>
+	</select>
+	
+	<!-- <select id="srchInterMonitorCnt" parameterClass="SrchInterMonitorParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT
+				COUNT(SEQ) AS CNT
+		FROM
+				RESERVATION
+		WHERE
+				1=1
+				AND !(STATUS = 'T' AND FLAG = 'C')
+				AND !(STATUS = 'C' AND FLAG = 'F')
+				AND !(STATUS = 'C' AND FLAG = 'R')
+	]]>
+		<isNotEmpty property="createBegin" prepend="AND">
+		<![CDATA[
+				CONVERT(START_TIME, DATE) >= CONVERT(#createBegin#, DATE)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createEnd" prepend="AND">
+		<![CDATA[
+				CONVERT(END_TIME, DATE) <= CONVERT(#createEnd#, DATE)
+		]]>		
+		</isNotEmpty>
+	</select> -->
+	<select id="srchInterMonitorCnt" parameterClass="SrchInterMonitorParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT	COUNT(SEQ) AS CNT
+		FROM	RESERVATION
+		WHERE	VERSION_COMMIT = 'Y'
+	]]>
+		<isNotEmpty property="createBegin" prepend="AND">
+		<![CDATA[				CONVERT(START_TIME, DATE) >= CONVERT(#createBegin#, DATE)	]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createEnd" prepend="AND">
+		<![CDATA[				CONVERT(END_TIME, DATE) <= CONVERT(#createEnd#, DATE)		]]>		
+		</isNotEmpty>
+	</select>
+	<!-- <select id="srchInterMonitorList" parameterClass="SrchInterMonitorParam" resultMap="reservationDTOMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, 
+				C.CORRELATION_ID, 
+				C.HOST_IP, 
+				C.DEST_IP,
+				C.REPLY_TO, 
+				C.REQUESTER_NSA, 
+				C.PROVIDER_NSA, 
+				C.GLOBAL_RESERVATION_ID, 
+				C.DESCRIPTION, 
+				C.CONNECTION_ID, 
+				C.START_TIME, 
+				C.END_TIME, 
+				C.DESIRED, 
+				C.MINIMUM, 
+				C.MAXIMUM, 
+				C.DIRECTIONALITY, 
+				C.SOURCE_STP_SEQ, 
+				C.DEST_STP_SEQ, 
+				C.USER_SEQ, 
+				C.STATUS, 
+				C.FLAG,
+				C.CREATETIME,
+				C.TYPE,
+				C.TROUBLE_YN
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT 	
+								SEQ, 
+								CORRELATION_ID, 
+								HOST_IP, 
+								DEST_IP,
+								REPLY_TO, 
+								REQUESTER_NSA, 
+								PROVIDER_NSA, 
+								GLOBAL_RESERVATION_ID, 
+								DESCRIPTION, 
+								CONNECTION_ID, 
+								START_TIME, 
+								END_TIME, 
+								DESIRED, 
+								MINIMUM, 
+								MAXIMUM, 
+								DIRECTIONALITY, 
+								SOURCE_STP_SEQ, 
+								DEST_STP_SEQ, 
+								USER_SEQ, 
+								STATUS, 
+								FLAG,
+								CREATETIME,
+								TYPE,
+								TROUBLE_YN
+						FROM 
+								RESERVATION
+						WHERE 
+								1=1
+								AND !(STATUS = 'T' AND FLAG = 'C')
+								AND !(STATUS = 'C' AND FLAG = 'F')
+								AND !(STATUS = 'C' AND FLAG = 'R')
+								AND SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	]]>
+		<isNotEmpty property="createBegin" prepend="AND">
+		<![CDATA[
+								CONVERT(START_TIME, DATE) >= CONVERT(#createBegin#, DATE)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createEnd" prepend="AND">
+		<![CDATA[
+								CONVERT(END_TIME, DATE) <= CONVERT(#createEnd#, DATE)
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY $sortKey$ $sortType$) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				C.SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select> -->
+	<select id="srchInterMonitorList" parameterClass="SrchInterMonitorParam" resultMap="reservationListMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, 
+				C.CORRELATION_ID, 
+				C.HOST_IP, 
+				C.DEST_IP,
+				C.REPLY_TO, 
+				C.REQUESTER_NSA, 
+				C.PROVIDER_NSA, 
+				C.GLOBAL_RESERVATION_ID, 
+				C.DESCRIPTION, 
+				C.CONNECTION_ID, 
+				C.START_TIME, 
+				C.END_TIME, 
+				C.DESIRED, 
+				C.MINIMUM, 
+				C.MAXIMUM, 
+				C.DIRECTIONALITY, 
+				C.SOURCE_STP_SEQ, 
+				C.DEST_STP_SEQ, 
+				C.USER_SEQ, 
+				C.STATUS, 
+				C.FLAG,
+				C.CREATETIME,
+				C.TYPE,
+				C.TROUBLE_YN,
+				
+				C.SYMMETRIC_PATH,
+				C.SOURCE_VLAN,
+				C.DEST_VLAN,
+				C.VERSION,
+				C.VERSION_COMMIT,
+				C.MTU,
+				C.BURSTSIZE,
+				C.SOURCE_LOCAL_ID,
+				C.DEST_LOCAL_ID,
+				C.RESERVE_FIN,
+				C.RESERVE_STATE,
+				C.PROVISION_STATE,
+				C.LIFE_CYCLE,
+				C.DATA_PLANE,
+				C.SOURCE_NETWORK_ID,
+				C.DEST_NETWORK_ID,
+				C.SOURCE_NETWORK_NM,
+                C.DEST_NETWORK_NM,
+                C.STATE_NM,
+                C.SIMPLE_MODE	
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT 	
+								SEQ, 
+								CORRELATION_ID, 
+								HOST_IP, 
+								DEST_IP,
+								REPLY_TO, 
+								REQUESTER_NSA, 
+								PROVIDER_NSA, 
+								GLOBAL_RESERVATION_ID, 
+								DESCRIPTION, 
+								CONNECTION_ID, 
+								START_TIME, 
+								END_TIME, 
+								DESIRED, 
+								MINIMUM, 
+								MAXIMUM, 
+								DIRECTIONALITY, 
+								SOURCE_STP_SEQ, 
+								DEST_STP_SEQ, 
+								USER_SEQ, 
+								STATUS,
+								FLAG, 
+								CREATETIME,
+								TYPE,
+								TROUBLE_YN,
+								
+								SYMMETRIC_PATH,
+								SOURCE_VLAN,
+								DEST_VLAN,
+								VERSION,
+								VERSION_COMMIT,
+								MTU,
+								BURSTSIZE,
+								SOURCE_LOCAL_ID,
+								DEST_LOCAL_ID,
+								RESERVE_FIN,
+								RESERVE_STATE,
+								PROVISION_STATE,
+								LIFE_CYCLE,
+								DATA_PLANE,
+								SOURCE_NETWORK_ID,
+								DEST_NETWORK_ID,
+								STATE_NM,
+								SIMPLE_MODE,
+                                SNS.NETWORK_NM AS SOURCE_NETWORK_NM,
+                                SND.NETWORK_NM AS DEST_NETWORK_NM                           								
+						FROM 
+								RESERVATION R LEFT OUTER JOIN STP_NETWORK SNS ON R.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                                			  LEFT OUTER JOIN STP_NETWORK SND ON R.DEST_NETWORK_ID=SND.NETWORK_ID
+						WHERE	R.VERSION_COMMIT = 'Y'
+	]]>
+		<isNotEmpty property="createBegin" prepend="AND">
+		<![CDATA[
+								CONVERT(R.START_TIME, DATE) >= CONVERT(#createBegin#, DATE)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createEnd" prepend="AND">
+		<![CDATA[
+								CONVERT(R.END_TIME, DATE) <= CONVERT(#createEnd#, DATE)
+		]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY R.CREATETIME DESC) A,
+						(SELECT @RNUM:=0) B
+				) C
+		LIMIT #sIdx#, #row#
+	]]>	
+	</select>
+	
+	<delete id="reservationDelete" parameterClass="ReservationDTO">
+	<![CDATA[
+		DELETE FROM RESERVATION WHERE SEQ = #seq#
+	]]>	
+	</delete>
+	<delete id="eroDelete" parameterClass="ReservationDTO">
+	<![CDATA[
+		DELETE FROM ERO WHERE RESERVATION_SEQ = #seq#
+	]]>	
+	</delete>
+	
+	<select id="resvListByQry" parameterClass="java.util.Map" resultMap="reservationListMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ, 
+				C.CORRELATION_ID, 
+				C.HOST_IP, 
+				C.DEST_IP,
+				C.REPLY_TO, 
+				C.REQUESTER_NSA, 
+				C.PROVIDER_NSA, 
+				C.GLOBAL_RESERVATION_ID, 
+				C.DESCRIPTION, 
+				C.CONNECTION_ID, 
+				C.START_TIME, 
+				C.END_TIME, 
+				C.DESIRED, 
+				C.MINIMUM, 
+				C.MAXIMUM, 
+				C.DIRECTIONALITY, 
+				C.SOURCE_STP_SEQ, 
+				C.DEST_STP_SEQ, 
+				C.USER_SEQ, 
+				C.STATUS, 
+				C.FLAG,
+				C.CREATETIME,
+				C.TYPE,
+				C.TROUBLE_YN,
+				
+				C.SYMMETRIC_PATH,
+				C.SOURCE_VLAN,
+				C.DEST_VLAN,
+				C.VERSION,
+				C.VERSION_COMMIT,
+				C.MTU,
+				C.BURSTSIZE,
+				C.SOURCE_LOCAL_ID,
+				C.DEST_LOCAL_ID,
+				C.RESERVE_FIN,
+				C.RESERVE_STATE,
+				C.PROVISION_STATE,
+				C.LIFE_CYCLE,
+				C.DATA_PLANE,
+				C.SOURCE_NETWORK_ID,
+				C.DEST_NETWORK_ID,
+				'' as SOURCE_NETWORK_NM,
+                '' as DEST_NETWORK_NM,
+                C.STATE_NM,
+                C.SIMPLE_MODE	
+		FROM	RESERVATION C
+		WHERE	1=1
+	]]>
+		<isNotEmpty property="connectionId" prepend="AND">
+		<![CDATA[	CONNECTION_ID = #connectionId#	]]>		
+		</isNotEmpty>
+		<isNotEmpty property="globalReservationId" prepend="AND">
+		<![CDATA[	GLOBAL_RESERVATION_ID = #globalReservationId#	]]>		
+		</isNotEmpty>		
+	</select>
+	
+	<select id="srchReservationFavCnt" parameterClass="java.util.Map" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT	COUNT(SEQ) AS CNT
+		FROM	USER_FAV
+		WHERE	1=1
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[
+				USER_SEQ = #user_seq#
+		]]>		
+		</isNotEmpty>
+	</select>
+	
+	<select id="srchReservationFavList" parameterClass="java.util.Map" resultMap="reservationFavMap">
+	<![CDATA[
+		SELECT	C.SEQ, 
+                C.USER_SEQ, 
+                C.PROVIDER_NSA		AS PROVIDER_NSA_ADDR, 
+                C.NSA_NM			AS PROVIDER_NSA_NM,
+                C.SOURCE_NETWORK_ID, 
+                C.SOURCE_NETWORK_NM,
+                C.DEST_NETWORK_ID, 
+                C.DEST_NETWORK_NM,
+                C.SOURCE_LOCAL_ID, 
+                C.SOURCE_LOCAL_NM,
+                C.DEST_LOCAL_ID, 
+                C.DEST_LOCAL_NM,
+                C.HOST_IP, 
+                C.DEST_IP, 
+                C.NM
+		FROM	(SELECT	@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM	(SELECT	UF.SEQ, 
+                                UF.USER_SEQ, 
+                                UF.PROVIDER_NSA, 
+                                UF.SOURCE_NETWORK_ID, 
+                                UF.DEST_NETWORK_ID, 
+                                UF.SOURCE_LOCAL_ID, 
+                                UF.DEST_LOCAL_ID, 
+                                UF.HOST_IP, 
+                                UF.DEST_IP, 
+                                UF.NM,
+                                PN.NSA_NM,
+                                SNS.NETWORK_NM	AS SOURCE_NETWORK_NM,
+                                SND.NETWORK_NM	AS DEST_NETWORK_NM,
+                                SLS.LOCAL_NM	AS SOURCE_LOCAL_NM,
+                                SLD.LOCAL_NM	AS DEST_LOCAL_NM
+                        FROM	USER_FAV UF	LEFT OUTER JOIN PROVIDER_NSA PN ON UF.PROVIDER_NSA=PN.NSA_ADDR
+											LEFT OUTER JOIN STP_NETWORK SNS ON UF.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                                        	LEFT OUTER JOIN STP_NETWORK SND ON UF.DEST_NETWORK_ID=SND.NETWORK_ID
+                                        	LEFT OUTER JOIN STP_LOCAL SLS ON UF.SOURCE_NETWORK_ID=SLS.NETWORK_ID AND UF.SOURCE_LOCAL_ID=SLS.LOCAL_ID
+                                        	LEFT OUTER JOIN STP_LOCAL SLD ON UF.DEST_NETWORK_ID=SLD.NETWORK_ID AND UF.DEST_LOCAL_ID=SLD.LOCAL_ID
+						WHERE	1=1
+	]]>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[				UF.USER_SEQ = #user_seq#	]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY UF.SEQ DESC) A,
+						(SELECT @RNUM:=0) B
+				) C
+	]]>			
+	</select>
+	
+	<select id="reservationFavSelect" parameterClass="java.util.Map" resultMap="reservationFavMap">
+	<![CDATA[
+		SELECT	C.SEQ, 
+                C.USER_SEQ, 
+                C.PROVIDER_NSA		AS PROVIDER_NSA_ADDR, 
+                C.NSA_NM			AS PROVIDER_NSA_NM,
+                C.SOURCE_NETWORK_ID, 
+                C.SOURCE_NETWORK_NM,
+                C.DEST_NETWORK_ID, 
+                C.DEST_NETWORK_NM,
+                C.SOURCE_LOCAL_ID, 
+                C.SOURCE_LOCAL_NM,
+                C.DEST_LOCAL_ID, 
+                C.DEST_LOCAL_NM,
+                C.HOST_IP, 
+                C.DEST_IP, 
+                C.NM
+		FROM	(SELECT	@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM	(SELECT	UF.SEQ, 
+                                UF.USER_SEQ, 
+                                UF.PROVIDER_NSA, 
+                                UF.SOURCE_NETWORK_ID, 
+                                UF.DEST_NETWORK_ID, 
+                                UF.SOURCE_LOCAL_ID, 
+                                UF.DEST_LOCAL_ID, 
+                                UF.HOST_IP, 
+                                UF.DEST_IP, 
+                                UF.NM,
+                                PN.NSA_NM,
+                                SNS.NETWORK_NM	AS SOURCE_NETWORK_NM,
+                                SND.NETWORK_NM	AS DEST_NETWORK_NM,
+                                SLS.LOCAL_NM	AS SOURCE_LOCAL_NM,
+                                SLD.LOCAL_NM	AS DEST_LOCAL_NM
+                        FROM	USER_FAV UF	LEFT OUTER JOIN PROVIDER_NSA PN ON UF.PROVIDER_NSA=PN.NSA_ADDR
+											LEFT OUTER JOIN STP_NETWORK SNS ON UF.SOURCE_NETWORK_ID=SNS.NETWORK_ID
+                                        	LEFT OUTER JOIN STP_NETWORK SND ON UF.DEST_NETWORK_ID=SND.NETWORK_ID
+                                        	LEFT OUTER JOIN STP_LOCAL SLS ON UF.SOURCE_NETWORK_ID=SLS.NETWORK_ID AND UF.SOURCE_LOCAL_ID=SLS.LOCAL_ID
+                                        	LEFT OUTER JOIN STP_LOCAL SLD ON UF.DEST_NETWORK_ID=SLD.NETWORK_ID AND UF.DEST_LOCAL_ID=SLD.LOCAL_ID
+						WHERE	1=1
+	]]>
+		<isNotEmpty property="seq" prepend="AND">
+		<![CDATA[				UF.SEQ = #seq#	]]>		
+		</isNotEmpty>
+		<isNotEmpty property="user_seq" prepend="AND">
+		<![CDATA[				UF.USER_SEQ = #user_seq#	]]>		
+		</isNotEmpty>
+	<![CDATA[	
+						ORDER BY UF.SEQ DESC) A,
+						(SELECT @RNUM:=0) B
+				) C
+	]]>			
+	</select>
+	
+	<insert id="reserveFavInsert" parameterClass="ReservationDTO">
+	<![CDATA[
+		INSERT INTO USER_FAV 
+		(
+			USER_SEQ, 
+			PROVIDER_NSA, 
+			SOURCE_NETWORK_ID,
+			DEST_NETWORK_ID, 
+			SOURCE_LOCAL_ID, 
+			DEST_LOCAL_ID, 
+			HOST_IP, 
+			DEST_IP, 
+			NM		
+		)
+		VALUES
+		(
+			#user_seq#, 
+			#provider_nsa#, 
+			#source_network_id#,
+			#dest_network_id#,
+			#source_local_id#,
+			#dest_local_id#,
+			#host_ip#, 
+			#dest_ip#,
+			#state_nm#		
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	
+	<update id="reserveFavUpdate" parameterClass="ReservationDTO">
+	<![CDATA[
+		UPDATE	USER_FAV 
+		SET		USER_SEQ			= #user_seq#,
+				PROVIDER_NSA		= #provider_nsa#, 
+				SOURCE_NETWORK_ID	= #source_network_id#, 
+				DEST_NETWORK_ID		= #dest_network_id#, 
+				SOURCE_LOCAL_ID		= #source_local_id#, 
+				DEST_LOCAL_ID		= #dest_local_id#, 
+				HOST_IP				= #host_ip#, 
+				DEST_IP				= #dest_ip#, 
+				NM					= #state_nm#
+		WHERE	SEQ = #seq#
+	]]>
+	</update>
+	
+	<delete id="reserveFavDelete" parameterClass="java.lang.String">
+	<![CDATA[
+		DELETE FROM	USER_FAV
+		WHERE SEQ = #seq# 
+	]]>
+	</delete>
+	
+	<!-- sql area end -->
+</sqlMap>

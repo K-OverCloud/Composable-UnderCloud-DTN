@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 
+		'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+ 
+<sqlMap namespace="user">
+
+	<!-- alias area start -->
+	<typeAlias alias="User" 					type="com.netmng.vo.User" />
+	<typeAlias alias="Grade" 					type="com.netmng.vo.Grade" />
+	<typeAlias alias="MenuAuth" 				type="com.netmng.vo.MenuAuth" />
+	<typeAlias alias="UserDTO" 					type="com.netmng.dto.user.UserDTO" />
+	
+	<!-- alias area end -->
+
+	<!-- resultMap area start -->
+	<resultMap id="sessionMap" 					class="User">		
+		<result property = "seq" 				column = "SEQ" 			/>
+		<result property = "id" 				column = "ID" 			/>
+		<result property = "name" 				column = "NAME" 		/>
+		<result property = "jumin_no" 			column = "JUMIN_NO" 	/>
+		<result property = "company" 			column = "COMPANY" 		/>
+		<result property = "email" 				column = "EMAIL" 		/>
+		<result property = "grade_seq" 			column = "GRADE_SEQ" 	/>
+		<result property = "active_yn" 			column = "ACTIVE_YN" 	/>
+		<result property = "createTime" 		column = "CREATETIME" 	/>
+		<result property = "delTime" 			column = "DELTIME" 		/>
+		<result property = "grade" 				column = "{step=GRADE_SEQ}" select="user.userGradeSelect" />
+	</resultMap>
+	<resultMap id="userInfoMap" 				class="UserDTO" 		extends="sessionMap">
+	</resultMap>
+	
+	<resultMap id="gradeMap" 					class="Grade">		
+		<result property = "seq" 				column = "SEQ" 			/>
+		<result property = "step" 				column = "STEP" 		/>
+		<result property = "name" 				column = "NAME" 		/>
+		<result property = "title" 				column = "TITLE" 		/>
+		<result property = "comment" 			column = "COMMENT" 		/>
+		<result property = "use_yn" 			column = "USE_YN" 		/>
+		<result property = "createTime" 		column = "CREATETIME" 	/>
+	</resultMap>
+	
+	<resultMap id="menuAuthMap" 				class="MenuAuth">		
+		<result property = "seq" 				column = "SEQ" 			/>
+		<result property = "grade_seq" 			column = "GRADE_SEQ" 	/>
+		<result property = "menu_seq" 			column = "MENU_SEQ" 	/>
+		<result property = "list_auth" 			column = "LIST_AUTH"	/>
+		<result property = "view_auth" 			column = "VIEW_AUTH" 	/>
+		<result property = "create_auth" 		column = "CREATE_AUTH"	/>
+		<result property = "update_auth" 		column = "UPDATE_AUTH"	/>
+		<result property = "delete_auth" 		column = "DELETE_AUTH"	/>
+		<result property = "ripple_auth" 		column = "RIPPLE_AUTH"	/>
+	</resultMap>
+	<!-- resultMap area end -->
+
+	<!-- sql area start -->	
+	<statement id="userIdStmt" resultClass="java.lang.String">
+	<![CDATA[ 
+		SELECT 
+				ID
+		FROM 
+				USER
+		WHERE
+				SEQ = #seq#
+	]]> 
+	</statement>
+	<statement id="userNameStmt" resultClass="java.lang.String">
+	<![CDATA[ 
+		SELECT 
+				NAME
+		FROM 
+				USER
+		WHERE
+				SEQ = #seq#
+	]]> 
+	</statement>
+	
+	<select id="userGradeSelect" parameterClass="Grade" resultMap="gradeMap">
+	<![CDATA[ 
+		SELECT 
+				SEQ, STEP, NAME, TITLE, COMMENT, USE_YN, CREATETIME
+		FROM 
+				GRADE
+		WHERE
+				STEP = #step#
+	]]> 
+	</select>
+	
+	<select id="userCKList" parameterClass="UserDTO" resultMap="sessionMap">
+	<![CDATA[
+		SELECT
+				SEQ,
+				ID, 
+				NAME, 
+				JUMIN_NO, 
+				COMPANY, 
+				EMAIL, 
+				GRADE_SEQ, 
+				ACTIVE_YN, 
+				CREATETIME, 
+				DELTIME
+		FROM
+				USER
+		WHERE
+				1=1
+	]]>
+		<isEqual property="mode" compareValue="userCK" prepend="AND">
+		<![CDATA[	
+				(ID = #id# OR EMAIL = TRIM(#email#))
+		]]>	
+		</isEqual>
+		<isEqual property="mode" compareValue="idCK" prepend="AND">
+		<![CDATA[	
+				ID = #id#
+		]]>	
+		</isEqual>
+		<isEqual property="mode" compareValue="loginCK" prepend="AND">
+		<![CDATA[	
+				ID = #id#
+				AND PASS = #pass#
+				AND ACTIVE_YN = 'Y'
+		]]>	
+		</isEqual>
+		<isEqual property="mode" compareValue="findUser" prepend="AND">
+		<![CDATA[	
+				NAME = #name#
+				AND EMAIL = #email#
+				AND ACTIVE_YN = 'Y'
+		]]>	
+		</isEqual>
+		<isEqual property="mode" compareValue="findUserId" prepend="AND">
+		<![CDATA[	
+				NAME = #name#
+				AND ID = #id#
+				AND EMAIL = #email#
+				AND ACTIVE_YN = 'Y'
+		]]>	
+		</isEqual>
+		<isEqual property="mode" compareValue="grade" prepend="AND">
+		<![CDATA[	
+				GRADE_SEQ = #grade_seq#
+				AND ACTIVE_YN = 'Y'
+		]]>	
+		</isEqual>
+	</select>
+	
+	<select id="myInfoSelect" parameterClass="User" resultMap="userInfoMap">
+	<![CDATA[
+		SELECT
+				SEQ,
+				ID, 
+				NAME, 
+				JUMIN_NO, 
+				COMPANY, 
+				EMAIL, 
+				GRADE_SEQ, 
+				ACTIVE_YN, 
+				CREATETIME, 
+				DELTIME
+		FROM
+				USER
+		WHERE
+				SEQ	= #seq#
+				AND ID = #id#
+				AND ACTIVE_YN = 'Y'
+	]]>
+	</select>
+	
+	<select id="menuAuthSelect" parameterClass="java.util.Map" resultMap="menuAuthMap">
+	<![CDATA[
+		SELECT
+				*
+		FROM
+				MENU_AUTH
+		WHERE
+				MENU_SEQ = 
+						(SELECT 
+								SEQ
+						FROM
+								MENU
+						WHERE
+								URL = #url#
+								AND USE_YN = 'Y')
+				AND GRADE_SEQ = 
+						(SELECT
+								GRADE_SEQ
+						FROM
+								USER 
+						WHERE
+								SEQ = #seq#
+						)
+	]]>
+	</select>
+	
+	<insert id="userInsert" parameterClass="UserDTO">
+	<![CDATA[
+		INSERT INTO USER 
+		(
+			ID, 
+			PASS, 
+			NAME, 
+			COMPANY, 
+			EMAIL,  
+			GRADE_SEQ,
+			ACTIVE_YN,
+			CREATETIME
+		)
+		VALUES
+		(
+			#id#, 
+			#pass#, 
+			#name#, 
+			#company#, 
+			TRIM(#email#),
+			'99',
+			#active_yn#,
+			NOW()
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	
+	<insert id="userInsertAdm" parameterClass="UserDTO">
+	<![CDATA[
+		INSERT INTO USER 
+		(
+			ID, 
+			PASS, 
+			NAME, 
+			COMPANY, 
+			EMAIL,  
+			GRADE_SEQ,
+			ACTIVE_YN,
+			CREATETIME
+		)
+		VALUES
+		(
+			#id#, 
+			#pass#, 
+			#name#, 
+			#company#, 
+			TRIM(#email#),
+			#grade_seq#, 
+			#active_yn#,
+			NOW()
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	
+	<update id="userInfoUpdate" parameterClass="UserDTO">
+	<![CDATA[	
+		UPDATE USER 
+		SET
+	]]>
+		<isEqual property="mode" compareValue="myInfo">
+		<![CDATA[		
+			NAME = #name#,
+			COMPANY = #company#
+		]]>
+		</isEqual>
+		<isEqual property="mode" compareValue="myInfoPass">
+		<![CDATA[		
+			PASS = #newPass#
+		]]>
+		</isEqual>
+		<isEqual property="mode" compareValue="mailPass">
+		<![CDATA[		
+			PASS = #pass#
+		]]>
+		</isEqual>
+		<isEqual property="mode" compareValue="myInfoAdm">
+		<![CDATA[		
+			NAME = #name#,
+			COMPANY = #company#,
+			EMAIL = #email#,
+			GRADE_SEQ = #grade_seq#
+		]]>
+		</isEqual>
+	<![CDATA[		
+		WHERE
+			SEQ	= #seq#
+			AND ID = #id#
+	]]>
+		<isEqual property="mode" compareValue="myInfo" prepend="AND">
+		<![CDATA[	
+			PASS = #pass#
+		]]>
+		</isEqual>	
+		<isEqual property="mode" compareValue="myInfoPass" prepend="AND">
+		<![CDATA[	
+			PASS = #pass#
+		]]>
+		</isEqual>		
+	</update>
+	<!-- sql area end -->
+</sqlMap>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 
+		'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+ 
+<sqlMap namespace="file">
+
+	<!-- alias area start -->
+	<typeAlias alias="FileInfo" 				type="com.netmng.vo.FileInfo" />
+	
+	<!-- alias area end -->
+
+	<!-- resultMap area start -->
+	<resultMap id="fileInfoMap" 				class="FileInfo">
+		<result property = "seq" 				column = "SEQ" 			/>
+		<result property = "cate_seq" 			column = "CATE_SEQ" 	/>			
+		<result property = "cont_seq" 			column = "CONT_SEQ" 	/>			
+		<result property = "name" 				column = "NAME" 		/>
+		<result property = "path" 				column = "PATH" 		/>
+		<result property = "realName" 			column = "REALNAME" 	/>
+		<result property = "url" 				column = "URL" 			/>
+		<result property = "size" 				column = "SIZE" 		/>
+		<result property = "mime" 				column = "MIME" 		/>
+		<result property = "del_yn" 			column = "DEL_YN" 		/>		
+		<result property = "createTime" 		column = "CREATETIME" 	/>			
+	</resultMap>
+	<!-- resultMap area end -->
+
+	<!-- sql area start -->	
+	<insert id="fileInfoInsert" parameterClass="FileInfo">
+	<![CDATA[
+		INSERT INTO FILE_INFO 
+		(
+			NAME, 
+			PATH,
+			REALNAME,
+			SIZE,
+			MIME,
+			DEL_YN,
+			CREATETIME
+		)
+		VALUES
+		(
+			#name#, 
+			#path#,
+			#realName#,
+			#size#,
+			#mime#,
+			#del_yn#,
+			NOW()
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="fileInfoUpdate" parameterClass="FileInfo">
+	<![CDATA[
+		UPDATE FILE_INFO 
+		SET
+	]]>	
+		<isEqual property="mode" compareValue="setBoard">
+		<![CDATA[	
+			CATE_SEQ = #cate_seq#, 
+			CONT_SEQ = #cont_seq#,
+			DEL_YN = #del_yn# 
+		]]>	
+		</isEqual>
+		<isEqual property="mode" compareValue="delete">
+		<isNotNull property="del_yn">
+		<![CDATA[
+			DEL_YN = #del_yn#
+		]]>		
+		</isNotNull>	
+		</isEqual>
+	<![CDATA[
+		WHERE
+			1=1
+	]]>		
+		<isEqual property="mode" compareValue="setBoard">
+		<isNotNull property="seq" prepend="AND">
+		<![CDATA[		
+			SEQ = #seq# 
+		]]>
+		</isNotNull>
+		</isEqual>
+		<isEqual property="mode" compareValue="delete">
+		<![CDATA[		
+			AND CATE_SEQ = #cate_seq#
+			AND CONT_SEQ = #cont_seq#  
+		]]>
+		</isEqual>
+	</update>
+	<select id="fileInfoSelect" parameterClass="FileInfo" resultMap="fileInfoMap">
+	<![CDATA[
+		SELECT 
+				SEQ,
+				CATE_SEQ,
+				CONT_SEQ,
+				NAME, 
+				PATH,
+				REALNAME,
+				URL,
+				SIZE,
+				MIME,
+				DEL_YN,
+				CREATETIME
+		FROM
+				FILE_INFO
+		WHERE
+				DEL_YN = 'N'				
+	]]>
+		<isNotNull property="seq" prepend="AND">
+		<![CDATA[
+				SEQ = #seq#
+		]]>		
+		</isNotNull>
+		<isNotNull property="cate_seq" prepend="AND">
+		<![CDATA[
+				CATE_SEQ = #cate_seq#
+		]]>		
+		</isNotNull>	
+		<isNotNull property="cont_seq" prepend="AND">
+		<![CDATA[
+				CONT_SEQ = #cont_seq#
+		]]>		
+		</isNotNull>	
+	</select>
+	<!-- sql area end -->
+</sqlMap>

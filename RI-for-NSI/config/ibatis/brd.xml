@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 
+		'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+ 
+<sqlMap namespace="brd">
+
+	<!-- alias area start -->
+	<typeAlias alias="BrdDTO" 					type="com.netmng.dto.brd.BrdDTO" />
+	<typeAlias alias="SrchBrdParam" 			type="com.netmng.param.brd.SrchBrdParam" />
+	
+	<!-- alias area end -->
+
+	<!-- resultMap area start -->
+	<resultMap id="brdInfoMap" 					class="BrdDTO">		
+		<result property = "seq" 				column = "SEQ" 			/>
+		<result property = "cate_seq" 			column = "CATE_SEQ" 	/>
+		<result property = "title" 				column = "TITLE" 		/>
+		<result property = "content" 			column = "CONTENT" 		/>
+		<result property = "user_seq" 			column = "USER_SEQ" 	/>
+		<result property = "user_id" 			column = "USER_ID" 		/>
+		<result property = "user_pass" 			column = "USER_PASS" 	/>
+		<result property = "user_email" 		column = "USER_EMAIL" 	/>
+		<result property = "visit" 				column = "VISIT" 		/>
+		<result property = "g_seq" 				column = "G_SEQ" 		/>
+		<result property = "p_seq" 				column = "P_SEQ" 		/>
+		<result property = "step" 				column = "STEP" 		/>
+		<result property = "lvl" 				column = "LVL" 			/>
+		<result property = "use_yn" 			column = "USE_YN" 		/>
+		<result property = "createTime" 		column = "CREATETIME" 	/>
+		<result property = "user.name" 			column = "{seq=USER_SEQ}" select="user.userNameStmt" />
+		<result property = "fileInfoList" 		column = "{cate_seq=CATE_SEQ, cont_seq=SEQ}" select="file.fileInfoSelect" />
+	</resultMap>
+	<!-- resultMap area end -->
+
+	<!-- sql area start -->	
+	<insert id="brdInsert" parameterClass="BrdDTO">
+	<![CDATA[
+		INSERT INTO BOARD 
+		(
+			CATE_SEQ, 
+			TITLE, 
+			CONTENT, 
+			USER_SEQ, 
+			USER_ID, 
+			USER_PASS, 
+			USER_EMAIL, 
+			VISIT, 
+			G_SEQ, 
+			P_SEQ, 
+			STEP, 
+			LVL, 
+			USE_YN, 
+			CREATETIME
+		)
+		VALUES
+		(
+			#cate_seq#, 
+			#title#, 
+			#content#, 
+			#user_seq#, 
+			#user_id#, 
+			#user_pass#, 
+			#user_email#, 
+			#visit#, 
+			#g_seq#, 
+			#p_seq#, 
+			#step#, 
+			#lvl#, 
+			#use_yn#, 
+			NOW()
+		)
+	]]>
+		<selectKey resultClass="Long">
+		<![CDATA[
+			SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="brdVisitAdd" parameterClass="BrdDTO">
+	<![CDATA[
+		UPDATE BOARD SET VISIT = VISIT + 1 WHERE SEQ = #seq#
+	]]>
+	</update>
+	<update id="brdOrigUpdate" parameterClass="BrdDTO">
+	<![CDATA[
+		UPDATE BOARD SET G_SEQ = #g_seq#, P_SEQ = #p_seq# WHERE SEQ = #seq# 
+	]]>
+	</update>
+	<update id="brdUpdate" parameterClass="BrdDTO">
+	<![CDATA[
+		UPDATE BOARD 
+		SET 
+				TITLE = #title#, 
+				CONTENT = #content# 
+		WHERE 
+				SEQ = #seq# 
+	]]>
+	</update>
+	<update id="brdDelete" parameterClass="BrdDTO">
+	<![CDATA[
+		UPDATE BOARD 
+		SET 
+				USE_YN = #use_yn#
+		WHERE 
+				SEQ = #seq# 
+	]]>
+	</update>
+	<select id="brdSelect" parameterClass="BrdDTO" resultMap="brdInfoMap">
+	<![CDATA[
+		SELECT
+				SEQ,
+				CATE_SEQ, 
+				TITLE, 
+				CONTENT, 
+				USER_SEQ, 
+				USER_ID, 
+				USER_PASS, 
+				USER_EMAIL, 
+				VISIT, 
+				G_SEQ, 
+				P_SEQ, 
+				STEP, 
+				LVL, 
+				USE_YN, 
+				CREATETIME
+		FROM
+				BOARD
+		WHERE
+				1=1
+	]]>
+		<isEqual property="mode" compareValue="single">
+		<isNotNull property="seq" prepend="AND">
+		<![CDATA[	
+				SEQ = #seq#
+		]]>	
+		</isNotNull>
+		</isEqual>
+	</select>
+	<select id="srchBrdCnt" parameterClass="SrchBrdParam" resultClass="java.lang.Long">
+	<![CDATA[
+		SELECT 	
+				COUNT(SEQ) AS CNT
+		FROM 
+				BOARD
+		WHERE 
+				1=1
+				AND USE_YN = 'Y'
+	]]>
+		<isNotEmpty property="createBegin" prepend="AND">
+		<![CDATA[
+				CONVERT(CREATETIME, DATE) >= CONVERT(#createBegin#, DATE)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createEnd" prepend="AND">
+		<![CDATA[
+				CONVERT(CREATETIME, DATE) <= CONVERT(#createEnd#, DATE)
+		]]>		
+		</isNotEmpty>
+		<isEqual property="mode" compareValue="all">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+				(CONTENT LIKE CONCAT('%', #srchTxt#, '%')
+				OR TITLE LIKE CONCAT('%', #srchTxt#, '%'))
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+		<isEqual property="mode" compareValue="title">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+				TITLE LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+		<isEqual property="mode" compareValue="content">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+				CONTENT LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+	</select>
+	<select id="srchBrdList" parameterClass="SrchBrdParam" resultMap="brdInfoMap">
+	<![CDATA[
+		SELECT 
+				C.SEQ,
+				C.CATE_SEQ, 
+				C.TITLE, 
+				C.CONTENT, 
+				C.USER_SEQ, 
+				C.USER_ID, 
+				C.USER_PASS, 
+				C.USER_EMAIL, 
+				C.VISIT, 
+				C.G_SEQ, 
+				C.P_SEQ, 
+				C.STEP, 
+				C.LVL, 
+				C.USE_YN, 
+				C.CREATETIME 
+		FROM
+				(SELECT 
+						@RNUM:=@RNUM+1 AS ROWNUM, 
+						A.* 
+				FROM
+						(SELECT 	
+								SEQ,
+								CATE_SEQ, 
+								TITLE, 
+								CONTENT, 
+								USER_SEQ, 
+								USER_ID, 
+								USER_PASS, 
+								USER_EMAIL, 
+								VISIT, 
+								G_SEQ, 
+								P_SEQ, 
+								STEP, 
+								LVL, 
+								USE_YN, 
+								CREATETIME
+						FROM 
+								BOARD
+						WHERE 
+								1=1
+								AND USE_YN = 'Y'
+								AND SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+	]]>
+		<isNotEmpty property="createBegin" prepend="AND">
+		<![CDATA[
+								CONVERT(CREATETIME, DATE) >= CONVERT(#createBegin#, DATE)
+		]]>		
+		</isNotEmpty>
+		<isNotEmpty property="createEnd" prepend="AND">
+		<![CDATA[
+								CONVERT(CREATETIME, DATE) <= CONVERT(#createEnd#, DATE)
+		]]>		
+		</isNotEmpty>
+		<isEqual property="mode" compareValue="all">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+								(CONTENT LIKE CONCAT('%', #srchTxt#, '%')
+								OR TITLE LIKE CONCAT('%', #srchTxt#, '%'))
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+		<isEqual property="mode" compareValue="title">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+								TITLE LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+		<isEqual property="mode" compareValue="content">
+		<isNotEmpty property="srchTxt" prepend="AND">
+		<![CDATA[
+								CONTENT LIKE CONCAT('%', #srchTxt#, '%')
+		]]>		
+		</isNotEmpty>
+		</isEqual>
+	<![CDATA[	
+						ORDER BY G_SEQ DESC, STEP ASC) A,
+						(SELECT @RNUM:=0) B
+				) C
+		WHERE
+				C.SEQ < 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		LIMIT #sIdx#, #row#
+	]]>			
+	</select>
+	<!-- sql area end -->
+</sqlMap>

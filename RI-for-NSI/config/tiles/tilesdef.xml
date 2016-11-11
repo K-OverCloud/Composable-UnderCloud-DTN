@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	<definition id="main_layout" name="main_layout" templateExpression="/WEB-INF/jsp/layout/main/layout.jsp">
+		<put-attribute name="script"	expression="/WEB-INF/jsp/layout/main/script.jsp" />
+		<put-attribute name="header" 	expression="/WEB-INF/jsp/layout/main/header.jsp" />
+		<put-attribute name="footer" 	expression="/WEB-INF/jsp/layout/main/footer.jsp" />
+	</definition>
+	
+	<definition id="basic_layout" name="basic_layout" templateExpression="/WEB-INF/jsp/layout/basic/layout.jsp">
+		<put-attribute name="script"	expression="/WEB-INF/jsp/layout/basic/script.jsp" />
+		<put-attribute name="header" 	expression="/WEB-INF/jsp/layout/basic/header.jsp" />
+		<put-attribute name="footer" 	expression="/WEB-INF/jsp/layout/basic/footer.jsp" />
+		<put-attribute name="left"   	expression="/WEB-INF/jsp/layout/basic/left.jsp" />
+	</definition>
+	
+	<definition id="pop_layout" name="pop_layout" templateExpression="/WEB-INF/jsp/layout/pop/layout.jsp">
+		<put-attribute name="script"	expression="/WEB-INF/jsp/layout/pop/script.jsp" />
+		<put-attribute name="header" 	expression="/WEB-INF/jsp/layout/pop/header.jsp" />
+	</definition>
+	
+	<!-- 오류파일 지정 조회전용(데이터 저장하는 경우에는 /*/proc/*.jsp 파일에서 직접 오류처리하는 것이 바람직함.) -->
+	<definition name="/error/*" templateExpression="/WEB-INF/jsp/error/{1}.jsp" />
+	
+	<!-- 에디터 정의  -->
+	<definition name="/editor/pages/trex/*" templateExpression="/editor/pages/trex/{1}.jsp" />
+	
+	<!-- notice -->
+	<!-- 공지사항 게시판 정의  -->
+	<definition name="/brd/*" extends="basic_layout">
+		<put-attribute name="title" 	value="공지사항입니다." />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/brd/{1}.jsp" />
+	</definition>
+	<!-- 저장 형식의 파일 지정 -->
+	<definition name="/brd/proc/*" templateExpression="/WEB-INF/jsp/brd/proc/{1}.jsp" />
+	<!-- 팝업형식 파일 지정 -->
+	<definition name="/brd/pop/*" extends="pop_layout">
+		<put-attribute name="title" 	value="" />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/brd/pop/{1}.jsp" />
+	</definition> 
+	<!-- 팝업을 저장하는 파일 지정 -->
+	<definition name="/brd/poproc/*" templateExpression="/WEB-INF/jsp/brd/poproc/{1}.jsp" />
+	<!-- notice -->
+	
+	<!-- user -->
+	<definition name="/user/*" extends="basic_layout">
+		<put-attribute name="title" 	value="" />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/user/{1}.jsp" />
+	</definition>
+	<!-- 저장 형식의 파일 지정 -->
+	<definition name="/user/proc/*" templateExpression="/WEB-INF/jsp/user/proc/{1}.jsp" />
+	<!-- 팝업형식 파일 지정 -->
+	<definition name="/user/pop/*" extends="pop_layout">
+		<put-attribute name="title" 	value="" />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/user/pop/{1}.jsp" />
+	</definition>
+	<!-- 팝업을 저장하는 파일 지정 -->
+	<definition name="/user/poproc/*" templateExpression="/WEB-INF/jsp/user/poproc/{1}.jsp" />
+	<!-- user -->
+	
+	<!-- 관리자 -->
+	<definition name="/adm/*" extends="basic_layout">
+		<put-attribute name="title" 	value="" />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/adm/{1}.jsp" />
+	</definition>
+	<!-- 저장 형식의 파일 지정 -->
+	<definition name="/adm/proc/*" templateExpression="/WEB-INF/jsp/adm/proc/{1}.jsp" />
+	<!-- 팝업형식 파일 지정 -->
+	<definition name="/adm/pop/*" extends="pop_layout">
+		<put-attribute name="title" 	value="" />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/adm/pop/{1}.jsp" />
+	</definition>
+	<!-- 팝업을 저장하는 파일 지정 -->
+	<definition name="/adm/poproc/*" templateExpression="/WEB-INF/jsp/adm/poproc/{1}.jsp" />
+	<!-- 관리자 -->
+	
+	<!-- 네트워크 자원관리 -->
+	<definition name="/nsa/*" extends="basic_layout">
+		<put-attribute name="title" 	value="" />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/nsa/{1}.jsp" />
+	</definition>
+	<!-- 저장 형식의 파일 지정 -->
+	<definition name="/nsa/proc/*" templateExpression="/WEB-INF/jsp/nsa/proc/{1}.jsp" />
+	<!-- 팝업형식 파일 지정 -->
+	<definition name="/nsa/pop/*" extends="pop_layout">
+		<put-attribute name="title" 	value="" />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/nsa/pop/{1}.jsp" />
+	</definition>
+	<!-- 팝업을 저장하는 파일 지정 -->
+	<definition name="/nsa/poproc/*" templateExpression="/WEB-INF/jsp/nsa/poproc/{1}.jsp" />
+	<!-- 관리자 -->
+	
+	<!-- 공통 정의  -->
+	<definition name="/com/*" templateExpression="/WEB-INF/jsp/com/{1}.jsp" />
+	
+	<!-- 메인화면 -->
+	<definition name="/index" extends="main_layout">
+		<put-attribute name="title" 	value="네트워크 자원 시스템" />
+		<put-attribute name="body"		expression="/WEB-INF/jsp/index.jsp" />
+	</definition>
+</tiles-definitions>

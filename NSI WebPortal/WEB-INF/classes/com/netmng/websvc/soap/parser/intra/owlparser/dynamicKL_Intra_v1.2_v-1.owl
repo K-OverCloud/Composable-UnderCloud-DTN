@@ -1,0 +1,1358 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.dynamicKL.re.kr/nsi/intra"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="http://www.dynamicKL.re.kr/nsi/intra">
+    <Prefix name="" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Intra Domain(KRLight)</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="#ExternalSTP"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#FixedPath"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#KRLight"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Link"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#NetworkEquipment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SDP"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#STP"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#connectedTo"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasLink"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#AtoBBandwidth"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Bidirectional"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#BtoABandwidth"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#ConnectionInfo"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Description"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#DeviceName"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#DeviceVendor"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Fixed_Destination"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Fixed_Source"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Latency"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#LinkSpec"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#NEName"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#NSAName"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#NSISpec"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#NetworkEquimentSpec"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Option"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#PW"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#STP_LocalID"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_B-D-1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_B-G-1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_C-B-1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_C-D-1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_G-D-1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_G-S-1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_S-C-1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_S-D-1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_gloriad-krlight"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#LINK_krlight-ps"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#STPE"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#STP_Busan"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#STP_Changwon"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#STP_Gwangju"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#STP_Seoul"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#bi-ps"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#gloriad-krlight"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#krlight-gloriad"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="#ExternalSTP"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="#LinkSpec"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="#Order"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="#STP_localId"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="#Weight"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#ExternalSTP"/>
+        <Class IRI="#KRLight"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#FixedPath"/>
+        <Class IRI="#KRLight"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Link"/>
+        <Class IRI="#KRLight"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#NetworkEquipment"/>
+        <Class IRI="#KRLight"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#SDP"/>
+        <Class IRI="#KRLight"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#STP"/>
+        <Class IRI="#KRLight"/>
+    </SubClassOf>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_B-D-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_B-G-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_C-B-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_C-D-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_G-D-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_G-S-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_S-C-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_S-D-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_gloriad-krlight"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Link"/>
+        <NamedIndividual IRI="#LINK_krlight-ps"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#NetworkEquipment"/>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#NetworkEquipment"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#NetworkEquipment"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#NetworkEquipment"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#NetworkEquipment"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#NetworkEquipment"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#NetworkEquipment"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#NetworkEquipment"/>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#ExternalSTP"/>
+        <NamedIndividual IRI="#STPE"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#STP"/>
+        <NamedIndividual IRI="#STP_Busan"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#STP"/>
+        <NamedIndividual IRI="#STP_Changwon"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#SDP"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#STP"/>
+        <NamedIndividual IRI="#STP_Gwangju"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#STP"/>
+        <NamedIndividual IRI="#STP_Seoul"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#STP"/>
+        <NamedIndividual IRI="#bi-ps"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#STP"/>
+        <NamedIndividual IRI="#gloriad-krlight"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#STP"/>
+        <NamedIndividual IRI="#krlight-gloriad"/>
+    </ClassAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_B-D-1"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_B-D-1"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_B-G-1"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_B-G-1"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_C-B-1"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_C-B-1"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_C-D-1"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_C-D-1"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_G-D-1"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_G-D-1"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_G-S-1"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_G-S-1"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_S-C-1"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_S-C-1"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_S-D-1"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_S-D-1"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_gloriad-krlight"/>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_gloriad-krlight"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_krlight-ps"/>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Order"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <NamedIndividual IRI="#LINK_krlight-ps"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">3</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">4</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">3</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">3</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">3</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">3</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">4</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">2</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#Weight"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">1</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Busan"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Changwon"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="#STP_localId"/>
+            <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:krlight.net:2012:bi-ps</Literal>
+        </Annotation>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <NamedIndividual IRI="#STPE"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <NamedIndividual IRI="#STP_Seoul"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <NamedIndividual IRI="#STP_Busan"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <NamedIndividual IRI="#STP_Changwon"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <NamedIndividual IRI="#STP_Gwangju"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Gwangju"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#connectedTo"/>
+        <NamedIndividual IRI="#STP_Seoul"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+    </ObjectPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_B-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_B-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_B-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_B-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_B-G-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_B-G-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_B-G-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_B-G-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_C-B-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_C-B-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_C-B-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_C-B-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_C-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_C-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_C-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_C-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_G-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_G-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_G-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_G-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_G-S-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_G-S-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_G-S-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_G-S-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_S-C-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_S-C-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_S-C-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_S-C-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_S-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_S-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_S-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_S-D-1"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_gloriad-krlight"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_gloriad-krlight"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_gloriad-krlight"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_gloriad-krlight"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <NamedIndividual IRI="#LINK_krlight-ps"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Bidirectional"/>
+        <NamedIndividual IRI="#LINK_krlight-ps"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">true</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <NamedIndividual IRI="#LINK_krlight-ps"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">1000</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Latency"/>
+        <NamedIndividual IRI="#LINK_krlight-ps"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">20</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">ssh://dynamickl@127.0.0.1:22</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceName"/>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">MX80</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceVendor"/>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Juniper</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#PW"/>
+        <NamedIndividual IRI="#NE_GLORIAD"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">testpass</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">ssh://dynamickl@192.168.0.1:22</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceName"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">MX80</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceVendor"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Juniper</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#PW"/>
+        <NamedIndividual IRI="#NE_Juniper001"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">kistiPW</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">ssh://dynamickl@192.168.0.1:22</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceName"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">MX80</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceVendor"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Juniper</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#PW"/>
+        <NamedIndividual IRI="#NE_Juniper002"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">kistiPW</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">ssh://dynamickl@192.168.0.1:22</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceName"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">MX80</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceVendor"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Juniper</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#PW"/>
+        <NamedIndividual IRI="#NE_Juniper003"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">kistiPW</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">ssh://dynamickl@192.168.0.1:22</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceName"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">MX80</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceVendor"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Juniper</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#PW"/>
+        <NamedIndividual IRI="#NE_Juniper004"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">kistiPW</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">telnet://dynamickl@192.168.0.1:22</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceName"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">MX80</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceVendor"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Juniper</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#PW"/>
+        <NamedIndividual IRI="#NE_Juniper005"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">kistiPW</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">ssh://dynamickl@127.0.0.1:22</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceName"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">MX80</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceVendor"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Juniper</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#PW"/>
+        <NamedIndividual IRI="#NE_KRLIGHT"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">testpass</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">ssh://dynamickl@127.0.0.1:22</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceName"/>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">MX80</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#DeviceVendor"/>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Juniper</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#PW"/>
+        <NamedIndividual IRI="#NE_KRLIGHT_PS"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">testpass</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Description"/>
+        <NamedIndividual IRI="#STP_Busan"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Description-STP-Busan</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NEName"/>
+        <NamedIndividual IRI="#STP_Busan"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">NE_Juniper004</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NSAName"/>
+        <NamedIndividual IRI="#STP_Busan"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:topology</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#STP_LocalID"/>
+        <NamedIndividual IRI="#STP_Busan"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:p1</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Description"/>
+        <NamedIndividual IRI="#STP_Changwon"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Description-STP-Changwon</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NEName"/>
+        <NamedIndividual IRI="#STP_Changwon"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">NE_Juniper003</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NSAName"/>
+        <NamedIndividual IRI="#STP_Changwon"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:topology</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#STP_LocalID"/>
+        <NamedIndividual IRI="#STP_Changwon"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:p2</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Description"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Description-SDP-Daejeon</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NEName"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">NE_Juniper001</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NSAName"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:topology</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#STP_LocalID"/>
+        <NamedIndividual IRI="#STP_Daejeon"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:p0</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Description"/>
+        <NamedIndividual IRI="#STP_Gwangju"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Description-STP-Gwangju</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NEName"/>
+        <NamedIndividual IRI="#STP_Gwangju"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">NE_Juniper005</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NSAName"/>
+        <NamedIndividual IRI="#STP_Gwangju"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:topology</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#STP_LocalID"/>
+        <NamedIndividual IRI="#STP_Gwangju"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:p4</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Description"/>
+        <NamedIndividual IRI="#STP_Seoul"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Description-STP-Seoul</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NEName"/>
+        <NamedIndividual IRI="#STP_Seoul"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">NE_Juniper002</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NSAName"/>
+        <NamedIndividual IRI="#STP_Seoul"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:topology</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#STP_LocalID"/>
+        <NamedIndividual IRI="#STP_Seoul"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:dj.test:2013:p3</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Description"/>
+        <NamedIndividual IRI="#bi-ps"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">bi-ps</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NEName"/>
+        <NamedIndividual IRI="#bi-ps"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">NE_KRLIGHT_PS</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NSAName"/>
+        <NamedIndividual IRI="#bi-ps"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:krlight.net:2013:nsa</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#STP_LocalID"/>
+        <NamedIndividual IRI="#bi-ps"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:krlight.net:2013:bi-ps</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Description"/>
+        <NamedIndividual IRI="#gloriad-krlight"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">gloriad-kirlight</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NEName"/>
+        <NamedIndividual IRI="#gloriad-krlight"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">NE_GLORIAD</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NSAName"/>
+        <NamedIndividual IRI="#gloriad-krlight"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:krlight.net:2013:nsa</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#STP_LocalID"/>
+        <NamedIndividual IRI="#gloriad-krlight"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:krlight.net:2013:gloriad-krlight</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Description"/>
+        <NamedIndividual IRI="#krlight-gloriad"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">krlight-gloriad</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NEName"/>
+        <NamedIndividual IRI="#krlight-gloriad"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">NE_KRLIGHT</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#NSAName"/>
+        <NamedIndividual IRI="#krlight-gloriad"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:krlight.net:2013:nsa</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#STP_LocalID"/>
+        <NamedIndividual IRI="#krlight-gloriad"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">urn:ogf:network:krlight.net:2013:krlight-gloriad</Literal>
+    </DataPropertyAssertion>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#hasLink"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#hasNetworkEquipment"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#AtoBBandwidth"/>
+        <DataProperty IRI="#LinkSpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Bidirectional"/>
+        <DataProperty IRI="#LinkSpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#BtoABandwidth"/>
+        <DataProperty IRI="#LinkSpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ConnectionInfo"/>
+        <DataProperty IRI="#NetworkEquimentSpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Description"/>
+        <DataProperty IRI="#NSISpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#DeviceName"/>
+        <DataProperty IRI="#NetworkEquimentSpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#DeviceVendor"/>
+        <DataProperty IRI="#NetworkEquimentSpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Fixed_Destination"/>
+        <DataProperty IRI="#NSISpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Fixed_Source"/>
+        <DataProperty IRI="#NSISpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Latency"/>
+        <DataProperty IRI="#LinkSpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#NEName"/>
+        <DataProperty IRI="#NSISpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#NSAName"/>
+        <DataProperty IRI="#NSISpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#NSISpec"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Option"/>
+        <DataProperty IRI="#NSISpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#PW"/>
+        <DataProperty IRI="#NetworkEquimentSpec"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#STP_LocalID"/>
+        <DataProperty IRI="#NSISpec"/>
+    </SubDataPropertyOf>
+    <SubAnnotationPropertyOf>
+        <AnnotationProperty IRI="#Order"/>
+        <AnnotationProperty IRI="#LinkSpec"/>
+    </SubAnnotationPropertyOf>
+    <SubAnnotationPropertyOf>
+        <AnnotationProperty IRI="#STP_localId"/>
+        <AnnotationProperty IRI="#ExternalSTP"/>
+    </SubAnnotationPropertyOf>
+    <SubAnnotationPropertyOf>
+        <AnnotationProperty IRI="#Weight"/>
+        <AnnotationProperty IRI="#LinkSpec"/>
+    </SubAnnotationPropertyOf>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+

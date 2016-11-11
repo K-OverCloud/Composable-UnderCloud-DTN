@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+		
+	<!-- 컨트롤러 등록  -->		
+	<context:component-scan base-package="com.netmng.ctrl" />
+	<!-- 파일다룬로드 뷰 등록  -->		
+	<bean id="fileDownView" 	class="com.netmng.view.FileDownView" />
+		
+	<!-- 어노테이션 설정(유효성검사)  -->
+	<mvc:annotation-driven />
+	
+	<!-- 인터셉터 등록 -->
+	<mvc:interceptors>
+		<!-- 캐쉬 설정  -->
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*"/>
+			<mvc:mapping path="/*"/>
+			<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+				<property name="cacheSeconds" value="0"/>
+          	</bean>
+		</mvc:interceptor>
+		<!-- 다국어 체크  -->
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*"/>
+			<mvc:mapping path="/*"/>
+			<bean class="com.netmng.com.intercept.LocaleChange" />
+		</mvc:interceptor>
+		
+		<!-- 세션 체크 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/brd/*.do"/>
+			<mvc:mapping path="/adm/*.do"/>
+			<mvc:mapping path="/nsa/*.do"/>
+			<mvc:mapping path="/user/myInfoUF.do"/>
+			<bean class="com.netmng.com.intercept.SesstionCK" />
+		</mvc:interceptor>
+		<!-- 팝업, iframe 세션 체크 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/brd/proc/*.do"/>
+			<mvc:mapping path="/brd/pop/*.do"/>
+			<mvc:mapping path="/adm/proc/*.do"/>
+			<mvc:mapping path="/adm/pop/*.do"/>
+			<mvc:mapping path="/nsa/proc/*.do"/>
+			<mvc:mapping path="/nsa/pop/*.do"/>
+			<mvc:mapping path="/user/pop/myInfoPassUF.do"/>
+			<mvc:mapping path="/user/proc/myInfoUP.do"/>
+			<mvc:mapping path="/user/proc/myInfoPassUP.do"/>
+			<bean class="com.netmng.com.intercept.SesstionPopCK" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 파일업로드 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="104857600" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+	<!-- 파일다운로드 설정  -->
+	<bean id="downloadViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0" />
+	</bean>
+	
+	<!-- tiles 설정   Jakarta Commons BeanUtils, Jakarta Commons Digester, SLF4j 필요 -->	
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>classpath:config/tiles/tilesdef.xml</value>
+			</list>
+		</property>
+		<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory" />
+	</bean>
+	
+	<bean id="tilesResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
+		<property name="order" value="1" />
+	</bean>
+	
+	<!-- view 페이지 설정  타일즈 사용시 생략 -->	
+	<!-- 
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" 	value="2" />
+	</bean>
+	 -->
+</beans>
+
